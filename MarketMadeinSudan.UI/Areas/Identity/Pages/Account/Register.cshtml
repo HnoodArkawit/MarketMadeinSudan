@@ -1,0 +1,184 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<style type="text/css">
+
+    /*css*/
+    .form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 350px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+        right: 50%;
+        transform: translate(50%);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 28px;
+  color: royalblue;
+  font-weight: 600;
+  letter-spacing: -1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.title::before,.title::after {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  left: 0px;
+  background-color: royalblue;
+}
+
+.title::before {
+  width: 18px;
+  height: 18px;
+  background-color: royalblue;
+}
+
+.title::after {
+  width: 18px;
+  height: 18px;
+  animation: pulse 1s linear infinite;
+}
+
+.message, .signin {
+  color: rgba(88, 87, 87, 0.822);
+  font-size: 14px;
+}
+
+.signin {
+  text-align: center;
+}
+
+.signin a {
+  color: royalblue;
+}
+
+.signin a:hover {
+  text-decoration: underline royalblue;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+  gap: 6px;
+}
+
+.form label {
+  position: relative;
+}
+
+.form label .input {
+  width: 100%;
+  padding: 10px 10px 20px 10px;
+  outline: 0;
+  border: 1px solid rgba(105, 105, 105, 0.397);
+  border-radius: 10px;
+}
+
+.form label .input + span {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  color: grey;
+  font-size: 0.9em;
+  cursor: text;
+  transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown + span {
+  top: 15px;
+  font-size: 0.9em;
+}
+
+.form label .input:focus + span,.form label .input:valid + span {
+  top: 30px;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.form label .input:valid + span {
+  color: green;
+}
+
+.submit {
+  border: none;
+  outline: none;
+  background-color: royalblue;
+  padding: 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  transform: .3s ease;
+}
+
+.submit:hover {
+  background-color: rgb(56, 90, 194);
+}
+
+.keyframes pulse {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+</style>
+
+<div class="container" style="padding:150px 40px 150px 40px;direction: rtl;">
+    <form class="form" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <p class="title">تسجيل حساب</p>
+    <p class="message">املاء بيانات حقيقية لاستفادة منها في معاملاتك .</p>
+        <div class="flex">
+        <label>
+                <input asp-for="Input.FirstName" required="" placeholder="" type="text" class="input">
+            <span>الاسم الاول</span>
+        </label>
+
+        <label>
+                <input asp-for="Input.LastName" required="" placeholder="" type="text" class="input">
+            <span>اسم العائلة</span>
+        </label>
+    </div>  
+
+    <label>
+            <input asp-for="Input.Email" required="" placeholder="" type="email" class="input">
+        <span>البريد الالكتروني</span>
+    </label> 
+
+    <label>
+            <input asp-for="Input.Password" required="" placeholder="" type="password" class="input">
+        <span>كلمة المرور</span>
+    </label>
+    <label>
+            <input asp-for="Input.ConfirmPassword" required="" placeholder="" type="password" class="input">
+        <span>تاكيد كلمة المرور</span>
+    </label>
+        <button class="submit">تسجيل</button>
+        <p class="signin">لديك حساب مسبقا ? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">سجل دخول من هنا</a> </p>
+        <div style="padding: 10px;">
+            <a href="~/Home/Index" class="btn btn-outline-info col-12" style="height:40px;font-size:18px;border-radius:20px;text-align:center;font-family:MyFont;">
+                الرجوع للصفحة الرئسية
+            </a>
+        </div>
+
+</form>
+
+</div>
+
+

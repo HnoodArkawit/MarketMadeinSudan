@@ -1,0 +1,626 @@
+﻿@model HomeViewModel
+@inject MarketMadeinSudan.Application.Contracts.IAsyncRepository<MarketMadeinSudan.Domin.Publishers> publishers
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+<link href="~/assets/css/stylemarg.css" rel="stylesheet" />
+<style type="text/css">
+    .place-bid-btn {
+        background: var(--golden-puppy);
+        color: var(--black);
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        font-size: var(--fs-7);
+        text-transform: capitalize;
+        padding: 8px 16px;
+        border-radius: 4px;
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 1;
+    }
+
+        .custom-block:is(:hover, :focus) .place-bid-btn,
+        .place-bid-btn:focus {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+
+</style>
+<main>
+    <!--
+      - BANNER
+    -->
+    <div class="banner">
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="slider-item">
+
+                        <img src="~/images/banner-1.jpg" class="d-block w-100" alt="...">
+                        <div class="banner-content">
+
+                            <p class="banner-subtitle">Trending item</p>
+
+                            <h2 class="banner-title">منفذ تجارة عالمية متكاملة في رحاب المنتجات السودانية</h2>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="carousel-item">
+                    <div class="slider-item">
+
+                        <img src="~/images/banner-2.jpg" class="d-block w-100" alt="...">
+                        <div class="banner-content">
+
+                            <p class="banner-subtitle">Trending item</p>
+
+                            <h2 class="banner-title">منفذ تجارة عالمية متكاملة في رحاب المنتجات السودانية</h2>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="carousel-item">
+                    <div class="slider-item">
+
+                        <img src="~/images/banner-3.jpg" class="d-block w-100" alt="...">
+                        <div class="banner-content">
+
+                            <p class="banner-subtitle">Trending item</p>
+
+                            <h2 class="banner-title">منفذ تجارة عالمية متكاملة في رحاب المنتجات السودانية</h2>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!--
+      - الشركات
+    -->
+    <div class="wrapper">
+        <div class="slider">
+            <div class="slide-track">
+
+                <!-- Img Code -->
+                @foreach (var SubItem in Model.Publisherss)
+                {
+                    <div class="category">
+
+                        <div class="container">
+
+                            <div class="category-item">
+
+                                <div class="slide">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageCompany))" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <!-- Img Code End -->
+
+            </div>
+        </div>
+    </div>
+
+    <!--
+      - PRODUCT
+    -->
+
+    <div class="product-container">
+
+        <div class="container">
+
+            <div class="product-box" style="margin-bottom: 40px;">
+
+                <!--
+                  - PRODUCT FEATURED
+                -->
+
+                <div class="product-featured">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach (var SubItem in Model.Advertisementss)
+                            {
+                                <div class="carousel-item active">
+                                    <div class="showcase-container">
+
+                                        <div class="showcase">
+                                            <div class="showcase-banner">
+                                                <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="shampoo, conditioner & facewash packs" class="showcase-img">
+
+                                            </div>
+
+                                            <div class="showcase-content">
+
+                                                <a href="#">
+                                                    <p class="showcase-title">@Html.DisplayFor(modelItem => SubItem.ProductName)</p>
+                                                </a>
+
+                                                <p class="showcase-desc">
+                                                    @Html.DisplayFor(modelItem => SubItem.Description)
+                                                </p>
+
+                                                <div class="price-box">
+                                                    <p class="price">$ @Html.DisplayFor(modelItem => SubItem.PirceEnd)</p>
+
+                                                    <del>$ @Html.DisplayFor(modelItem => SubItem.PirceGo)</del>
+                                                </div>
+                                                @*                                                <button class="add-cart-btn">add to cart</button>
+                                            *@                                                <br>
+                                                <div class="showcase-status">
+                                                    <div class="wrapper">
+
+                                                        <p>
+                                                            وفر: <b>@(SubItem.PirceGo - SubItem.PirceEnd)</b>
+                                                        </p>
+
+                                                        <p>
+                                                            الكمية: <b>@Html.DisplayFor(modelItem => SubItem.Quantity)</b>
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="showcase-status-bar"></div>
+                                                </div>
+
+                                                <div class="countdown-box">
+
+                                                    <p class="countdown-desc">
+                                                        @Html.DisplayFor(modelItem => SubItem.NameCompany)
+                                                    </p>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!--
+                  - PRODUCT GRID
+                -->
+
+                <div class="product-main">
+
+                    <h2 class="title">المنتجات</h2>
+
+                    <div class="product-grid">
+                        @foreach (var SubItem in Model.Accessories)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner" style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.AccessoriesName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailAccessories", new { id = SubItem.AccessoriesId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.AgriculturalCrops)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner " style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.AgriculturalCropsName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailAgriculturalCrops", new { id = SubItem.AgriculturalCropsId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.ElectricalAndElctronic)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner" style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.ElectricalAndElctronicName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailsElectricalAndElctronic", new { id = SubItem.ElectricalAndElctronicId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.Aspires)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner" style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.AspiresName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailAspires", new { id = SubItem.AspiresId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.Fabrics)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner" style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.FabricsName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailsFabrics", new { id = SubItem.FabricsId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.Food)
+                        {
+                            <div class="showcase custom-block" style="height: 120px;">
+
+                                <div class="showcase-banner">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.FoodName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailsFood", new { id = SubItem.FoodId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.HouseholdProducts)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner" style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.HouseholdProductsName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailsHouseholdProducts", new { id = SubItem.HouseholdProductsId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.SportAndEntertainment)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner" style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.SportAndEntertainmentName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailsSportAndEntertainment", new { id = SubItem.SportAndEntertainmentId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.WatchesAndJewelry)
+                        {
+                            <div class="showcase custom-block">
+
+                                <div class="showcase-banner" style="height: 120px;">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.WatchesAndJewelryName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailsWatchesAndJewelry", new { id = SubItem.WatchesAndJewelryId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var SubItem in Model.Other)
+                        {
+                            <div class="showcase custom-block" style="height: 120px;">
+
+                                <div class="showcase-banner">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(@SubItem.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                                </div>
+                                <div class="showcase-content">
+
+                                    <div class="showcase-category">@Html.DisplayFor(modelItem => SubItem.OtherName)</div>
+                                    @{
+                                        string str = SubItem.Description;
+                                        if (str.Length > 100)
+                                        {
+                                            <p class="showcase-title">
+                                                @str.Substring(0, 100))
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="showcase-title">
+                                                @SubItem.Description
+                                            </p>
+
+                                        }
+                                    }
+                                    <div class="price-box">
+                                        <p class="price" style="margin-bottom:0px">$ @Html.DisplayFor(modelItem => SubItem.Pirce)</p>
+                                    </div>
+
+                                </div>
+                                <div class="place-bid-btn">
+                                    @Html.ActionLink("التفاصيل", "DetailsOther", new { id = SubItem.OtherId}, new { @class = "btn btn-dark" })
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+
+
+
+
+
+

@@ -1,0 +1,664 @@
+﻿@model MarketMadeinSudan.Domin.SportAndEntertainment
+@inject MarketMadeinSudan.Application.Contracts.IAsyncRepository<MarketMadeinSudan.Domin.Cart> datahelper
+@inject MarketMadeinSudan.Application.Contracts.IAsyncRepository<MarketMadeinSudan.Domin.Publishers> publishers
+@using System.Security.Claims;
+@using MarketMadeinSudan.Domin;
+@{
+    ViewData["Title"] = "سلة المشتريات";
+    var UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<style type="text/css">
+    .card {
+        position: relative;
+        background: transparent;
+        width: 300px;
+        height: 300px;
+        border: none;
+    }
+
+        .card:hover {
+            width: 300px;
+        }
+
+        .card .container-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #e7e7e7;
+            width: 190px;
+            height: 190px;
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 0 3px 1px #1818183d, 2px 2px 3px #18181865, inset 2px 2px 2px #ffffff;
+            transition: all .3s ease-in-out, opacity .3s;
+            transition-delay: .6s, 0s;
+        }
+
+        .card:hover .container-image {
+            opacity: 0;
+            border-radius: 8px;
+            transition-delay: 0s, .6s;
+        }
+
+        .card .container-image .image-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 125px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(2px 2px 2px #1818188a);
+            transition: all .3s ease-in-out;
+            transition-delay: .4s;
+        }
+
+        .card:hover .container-image .image-circle {
+            opacity: 0;
+            transition-delay: 0s;
+        }
+
+        .card .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #e7e7e7;
+            padding: 20px;
+            width: 190px;
+            height: 190px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 3px 1px #1818183d, 2px 2px 3px #18181865, inset 2px 2px 2px #ffffff;
+            visibility: hidden;
+            transition: .3s ease-in-out;
+            transition-delay: 0s;
+            z-index: 1;
+        }
+
+        .card:hover .content {
+            width: 290px;
+            height: 190px;
+            visibility: visible;
+            transition-delay: .5s;
+        }
+
+        .card .content .detail {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: all .3s ease-in-out;
+            transition-delay: 0s;
+        }
+
+        .card:hover .content .detail {
+            color: #181818;
+            opacity: 100%;
+            transition: 1s;
+            transition-delay: .3s;
+        }
+
+        .card .content .detail span {
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .card .content .detail button {
+            background: #b8854b;
+            margin-top: auto;
+            width: 75px;
+            height: 25px;
+            color: #ffffff;
+            font-size: 13px;
+            border: none;
+            border-radius: 8px;
+            transition: .3s ease-in-out;
+        }
+
+            .card .content .detail button:hover {
+                background: #d39f63;
+            }
+
+        .card .content .product-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+            .card .content .product-image .box-image {
+                display: flex;
+                position: absolute;
+                top: 0;
+                left: -25%;
+                width: 100%;
+                height: 115%;
+                opacity: 0;
+                transform: scale(.5);
+                transition: all .5s ease-in-out;
+                transition-delay: 0s;
+            }
+
+        .card:hover .content .product-image .box-image {
+            top: -25%;
+            left: 0;
+            opacity: 100%;
+            transform: scale(1);
+            transition-delay: .3s;
+        }
+
+        .card .content .product-image .box-image .img-product {
+            margin: auto;
+            width: 7rem;
+            height: auto;
+        }
+
+    .fil-shoes1, .fil-shoes2 {
+        fill: #333333
+    }
+    /*نهاية الكود*/
+    .wrapper {
+        height: 40px;
+        width: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #FFF;
+        border-radius: 12px;
+        box-shadow: 05px 10px rgba(0,0,0, 0.2);
+    }
+
+        .wrapper span {
+            width: 100%;
+            text-align: center;
+            font-size: 35px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+        }
+
+            .wrapper span.num {
+                font-size: 35px;
+                border-right: 2px solid rgba(0,0,0,0.2);
+                border-left: 2px solid rgba(0,0,0,0.2);
+                pointer-events: none;
+            }
+
+    .custom-num {
+        display: flex;
+        border-radius: 3em;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        transition: 0.3s;
+        font-family: initial;
+    }
+
+    .num-input::-webkit-outer-spin-button,
+    .num-input::-webkit-inner-spin-button {
+        _-webkit-appearance: none;
+        margin: 0;
+    }
+
+    .num-input {
+        background-color: #f2f2f2;
+        border: none;
+        color: #000;
+        font-size: 19px;
+        padding: 10px;
+        font-weight: bold;
+        width: 50px;
+        text-align: center;
+    }
+
+        .num-input:focus {
+            outline: none;
+        }
+
+    .custom-num i {
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .place-bid-btn {
+        background: var(--golden-puppy);
+        color: var(--black);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        font-size: var(--fs-7);
+        text-transform: capitalize;
+        padding: 8px 16px;
+        border-radius: 4px;
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+        .custom-block:is(:hover, :focus) .place-bid-btn,
+        .place-bid-btn:focus {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+
+    /*css*/
+    /*    .flip-card {
+                background-color: transparent;
+                width: 370px;
+                height: 100%;
+                perspective: 1000px;
+            }
+        */
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        /*        height: 100%;
+                    */ padding: 5px;
+        border-radius: 2em;
+        backface-visibility: hidden;
+        height: 535px;
+    }
+
+    .flip-card-front {
+        background-color: #240d29;
+        border: 4px solid #c143da;
+    }
+
+    .profile-image {
+        background-color: transparent;
+        border: none;
+        margin-top: 30%;
+        border-radius: 5em;
+        width: 120px;
+        height: 120px;
+    }
+
+    .name {
+        margin-top: 140px;
+        font-size: 27px;
+        color: white;
+        font-weight: bold;
+    }
+
+    .flip-card-back {
+        background-color: #240d29;
+        border: 4px solid #c143da;
+        transform: rotateY(180deg);
+        padding: 11px;
+    }
+
+    .description {
+        margin-top: 10px;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .socialbar {
+        background-color: transparent;
+        border-radius: 3em;
+        width: 90%;
+        padding: 14px;
+        margin-top: 11px;
+        margin-left: 10px;
+        word-spacing: 24px;
+        color: white;
+    }
+
+        .socialbar svg {
+            transition: 0.4s;
+            width: 20px;
+            height: 20px;
+            color: #c143da
+        }
+
+            .socialbar svg:hover {
+                color: white;
+            }
+
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+    /*الصورة*/
+    .img-area {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        background: var(--grey);
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+        .img-area .icon {
+            font-size: 100px;
+        }
+
+        .img-area h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .img-area p {
+            color: #999;
+        }
+
+            .img-area p span {
+                font-weight: 600;
+            }
+
+        .img-area img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-position: center;
+            z-index: 100;
+        }
+
+        .img-area::before {
+            content: attr(data-img);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: all .3s ease;
+            z-index: 200;
+        }
+
+        .img-area.active:hover::before {
+            opacity: 1;
+        }
+</style>
+<section class="trending-podcast-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="custom-block custom-block-full" style="height:560px;">
+                    <div class="custom-block-info">
+                        <h5 class="mb-2">
+                            <a href="#">
+                                @Html.DisplayFor(Model => Model.SportAndEntertainmentName)
+                            </a>
+                        </h5>
+                        <p class="mb-0">@Html.DisplayFor(Model => Model.Description)</p>
+                        <div class="custom-block-bottom d-flex justify-content-between mt-3">
+                            <a href="#">
+                                السعر : <span> @Html.DisplayFor(Model => Model.Pirce)</span>
+                            </a>
+
+                            <a href="#">
+                                الكمية : <span> @Html.DisplayFor(Model => Model.Quantity)</span>
+                            </a>
+
+                            <a href="#">
+                                وحدة القياس : <span> @Html.DisplayFor(Model => Model.MeasruingUnit)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12 mb-4 mb-lg-0" style="margin-top: 13%;">
+                <div class="custom-block custom-block-full">
+                    <div class="custom-block-info">
+                        <div id="carouselExampleIndicators" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner" style="margin-bottom:20px;">
+                                <div class="carousel-item active">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(Model.ImageUrl))" class="d-block w-100 h-100" alt="ImageUrl">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(Model.ImageProduct))" class="d-block w-100 h-100" alt="ImageProduct">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(Model.PictureProduct))" class="d-block w-100 h-100" alt="PictureProduct">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                <div class="custom-block custom-block-full" style="height:560px;">
+                    <div class="custom-block-info" style="padding:11px">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <div class="profile-image">
+                                        @{
+                                            @if (publishers.GetAll().Any(x => x.PublishersId == Model.PublishersId))
+                                            {
+                                                <img src="data:image/*;base64,@(Convert.ToBase64String(Model.Publishers.ImageCompany))" style="border-radius: 35em;border: 4px solid #f8f4f9;left:13px; width: 185px;height:185px;position:relative; transform: translate(-50%);text-align: center;margin: 1% 0;" />
+                                            }
+                                        }
+                                    </div>
+                                    <div class="name">
+                                        @Html.DisplayFor(Model => Model.NameCompany)
+                                    </div>
+
+                                </div>
+                                <div class="flip-card-back">
+                                    <div class="Description" style="color:white">
+                                        <p class="description" style="color:white">
+                                            تاريخ التاسيس @Html.DisplayFor(Model => Model.DateOfEstablishment)
+                                            <div class="line-dec" style="margin: 20px 20px 20px 0;"></div>
+                                            @{
+                                                string str = Model.DescriptionCompany;
+                                                if (str.Length > 650)
+                                                {
+                                                <p class="mb-0" style="color: white;">
+                                                        @str.Substring(0, 650))
+                                                </p>
+                                                }
+                                                else
+                                                {
+                                                <p class="mb-0" style="color: white;">
+                                                        @Model.DescriptionCompany
+                                                </p>
+
+                                                }
+                                            }
+                                        <div class="line-dec" style="margin: 20px 20px 20px 0;"></div>
+                                            @Html.DisplayFor(Model => Model.FounderAddress)
+
+                                        <div class="socialbar">
+                                            <a href="@Html.DisplayFor(Model => Model.WebSite)" id="github">
+                                                <i class="bi bi-globe2" style="font-size: 40px;"></i>
+                                            </a>
+                                            <a href="mailto:@Html.DisplayFor(Model => Model.EmailCompany)" id="instagram">
+                                                <i class="bi bi-envelope" style="font-size: 40px;"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <form method="post" class="custom-form contact-form" role="form" asp-controller="Cart" asp-action="Create" style="margin-bottom:50px">
+                <input type="hidden" name="ProductName" value="@Model.SportAndEntertainmentName" />
+                <input type="hidden" name="Price" value="@Model.Pirce" />
+                <input type="hidden" name="NameCompany" value="@Model.NameCompany" />
+                <input type="hidden" name="EmailCompany" value="@Model.EmailCompany" />
+                <input type="hidden" name="PublishersId" value="@Model.PublishersId" />
+                <input type="hidden" name="MeasruingUnit" value="@Model.MeasruingUnit" />
+                <input type="hidden" name="AddressCompany" value="@Model.FounderAddress" />
+                <input type="hidden" name="PhoneCompany" value="@Model.PhoneCompany" />
+
+
+                <div class="container" style="margin:30px">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                            @if (datahelper.GetAll().FirstOrDefault(x => x.ProductName == Model.SportAndEntertainmentName && x.UserId == UserId) != null)
+                            {
+                                <input type="submit" value="المنتج مضاف مسبقا" class="btn btn-outline-success fa fa-save col-12" style="padding:10px;margin-top: 119px;border-radius: var(--border-radius-large);" disabled />
+                            }
+                            else
+                            {
+                                <div class="container" style="margin-top:30px;margin-bottom:40px">
+                                    <div class="row">
+                                        <div class="custom-num" style="text-align: center;">
+                                            <div class="row">
+                                                <a asp-action="Minus" asp-controller="SportAndEntertainment" asp-route-id="@Model.SportAndEntertainmentId" class="btn btn-sm btn btn-danger" style="width:38px;height:48px; font-size: 20px;" onclick="decrement(event)">-</a>
+                                                <input name="Count" id="Count" class="num-input" value="0" min="0" max="@Model.Count" data-color="#21d99b" onchange="update()" readonly />
+                                                @if (Model.Count == 0)
+                                                {
+                                                    <a asp-action="Plus" asp-controller="SportAndEntertainment" asp-route-id="@Model.SportAndEntertainmentId" class="btn btn-sm btn btn-success" style="width:38px;height:48px;font-size: 22px;" onclick="increment(event);document.querySelector('.fa-save').disabled = false;" disabled>+</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="Plus" asp-controller="SportAndEntertainment" asp-route-id="@Model.SportAndEntertainmentId" class="btn btn-sm btn btn-success" style="width:38px;height:48px;font-size: 22px;" onclick="increment(event);document.querySelector('.fa-save').disabled = false;">+</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="submit" value="اضافة الي السلة" class="btn btn-outline-success fa fa-save col-12" style="padding:10px;border-radius: var(--border-radius-large);" onclick="if(document.getElementById('Count').value == 0) { this.disabled = true; }" />
+                            }
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px;margin-top: 119px;">
+                            <a asp-action="Index" class="btn btn-outline-info fa fa-rotate-back col-12" style="padding:10px;border-radius: var(--border-radius-large);">الرجوع للخلف</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+@*<div class="container">
+<div class="card">
+    @if (ViewData["RelatedProducts"] != null)
+    {
+        @foreach (var relatedProduct in ViewData["RelatedProducts"] as List<SportAndEntertainment>)
+        {
+            <div class="container-image">
+                <img src="data:image/*;base64,@(Convert.ToBase64String(@relatedProduct.ImageUrl))" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
+            </div>
+            <div class="content">
+                <div class="detail">
+                    @{
+                        string stra = relatedProduct.Description;
+                        if (str.Length > 100)
+                        {
+                            <span>
+                                @stra.Substring(0, 100))
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                @relatedProduct.Description
+                            </span>
+
+                        }
+                    }
+                    <p>@Html.DisplayFor(modelItem => relatedProduct.Pirce)</p>
+                    <button>Buy</button>
+                </div>
+                <div class="product-image">
+                    <div class="box-image">
+                        <img src="data:image/*;base64,@(Convert.ToBase64String(@relatedProduct.ImageProduct))" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+</div>
+*@
+
+<script>
+    var count = 0;
+    function increment(event) {
+        event.preventDefault();
+        count++;
+        document.getElementsByName("Count")[0].value = count;
+        $.ajax({
+            type: "POST",
+            url: "/SportAndEntertainment/Plus/@Model.SportAndEntertainmentId",
+            data: { count: count },
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                alert("The quantity is not available");
+                count--;
+                document.getElementsByName("Count")[0].value = count;
+            }
+        });
+    }
+    function decrement(event) {
+        event.preventDefault();
+        if (count > 0) {
+            count--;
+            document.getElementsByName("Count")[0].value = count;
+            $.ajax({
+                type: "POST",
+                url: "/SportAndEntertainment/Minus/@Model.SportAndEntertainmentId",
+                data: { count: count },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+    }
+    function update() {
+        count = document.getElementsByName("Count")[0].value;
+    }
+</script>
+
+
+

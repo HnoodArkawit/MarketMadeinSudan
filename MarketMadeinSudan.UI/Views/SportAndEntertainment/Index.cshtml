@@ -1,0 +1,732 @@
+﻿@model IEnumerable<MarketMadeinSudan.Domin.SportAndEntertainment>
+
+@{
+    ViewData["Title"] = "المحتوي";
+}
+<link rel="stylesheet" href="~/css/hover.css">
+
+<style type="text/css">
+    main.table {
+        height: 90vh;
+        background-color: #fff5;
+        backdrop-filter: blur(7px);
+        box-shadow: 0 .4rem .8rem #0005;
+        border-radius: .8rem;
+        overflow: hidden;
+    }
+
+    .table__header {
+        width: 100%;
+        height: 10%;
+        background-color: #fff4;
+        padding: .8rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .table__header .input-group {
+            width: 35%;
+            height: 100%;
+            background-color: #fff5;
+            padding: 0 .8rem;
+            border-radius: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: .2s;
+        }
+
+            .table__header .input-group:hover {
+                width: 45%;
+                background-color: #fff8;
+                box-shadow: 0 .1rem .4rem #0002;
+            }
+
+            .table__header .input-group img {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+
+            .table__header .input-group input {
+                width: 100%;
+                padding: 0 .5rem 0 .3rem;
+                background-color: transparent;
+                border: none;
+                outline: none;
+            }
+
+    .table__body {
+        width: 95%;
+        max-height: calc(89% - 1.6rem);
+        background-color: white;
+        margin: .8rem auto;
+        border-radius: .6rem;
+        overflow: auto;
+        overflow: overlay;
+    }
+
+        .table__body::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        .table__body::-webkit-scrollbar-thumb {
+            border-radius: .5rem;
+            background-color: #0004;
+            visibility: hidden;
+        }
+
+        .table__body:hover::-webkit-scrollbar-thumb {
+            visibility: visible;
+        }
+
+    table {
+        width: 100%;
+    }
+
+    td img {
+        width: 36px;
+        height: 36px;
+        margin-right: .5rem;
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+
+    table, th, td {
+        border-collapse: collapse;
+        padding: 1rem;
+        text-align: left;
+    }
+
+    thead th {
+        position: sticky;
+        top: 0;
+        left: 0;
+        background-color: #d5d1defe;
+        cursor: pointer;
+        text-transform: capitalize;
+    }
+
+    tbody tr:nth-child(even) {
+        color: #000;
+    }
+
+    tbody tr {
+        --delay: .1s;
+        transition: .5s ease-in-out var(--delay), background-color 0s;
+    }
+
+        tbody tr.hide {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        tbody tr:hover {
+            background-color: #fff6 !important;
+        }
+
+        tbody tr td,
+        tbody tr td p,
+        tbody tr td img {
+            transition: .2s ease-in-out;
+        }
+
+        tbody tr.hide td,
+        tbody tr.hide td p {
+            padding: 0;
+            font: 0 / 0 sans-serif;
+            transition: .2s ease-in-out .5s;
+        }
+
+            tbody tr.hide td img {
+                width: 0;
+                height: 0;
+                transition: .2s ease-in-out .5s;
+            }
+
+    .status {
+        padding: .4rem 0;
+        border-radius: 2rem;
+        text-align: center;
+    }
+
+        .status.delivered {
+            background-color: #86e49d;
+            color: #006b21;
+        }
+
+        .status.cancelled {
+            background-color: #d893a3;
+            color: #b30021;
+        }
+
+        .status.pending {
+            background-color: #ebc474;
+        }
+
+        .status.shipped {
+            background-color: #6fcaea;
+        }
+
+    thead th span.icon-arrow {
+        display: inline-block;
+        width: 1.3rem;
+        height: 1.3rem;
+        border-radius: 50%;
+        border: 1.4px solid transparent;
+        text-align: center;
+        font-size: 1rem;
+        margin-left: .5rem;
+        transition: .2s ease-in-out;
+    }
+
+    thead th:hover span.icon-arrow {
+        border: 1.4px solid #6c00bd;
+    }
+
+    thead th:hover {
+        color: #6c00bd;
+    }
+
+    thead th.active span.icon-arrow {
+        background-color: #6c00bd;
+        color: #fff;
+    }
+
+    thead th.asc span.icon-arrow {
+        transform: rotate(180deg);
+    }
+
+    thead th.active, tbody td.active {
+        color: #6c00bd;
+    }
+
+    /*delete*/
+    #deleteItim {
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        border: none;
+        position: relative;
+        border-radius: 10px;
+        -webkit-box-shadow: 1px 1px 5px .2px #00000035;
+        box-shadow: 1px 1px 5px .2px #00000035;
+        -webkit-transition: .2s linear;
+        transition: .2s linear;
+        transition-delay: .2s;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: space-between;
+    }
+
+        #deleteItim:hover {
+            width: 150px;
+            transition-delay: .2s;
+        }
+
+            #deleteItim:hover > .paragraph {
+                visibility: visible;
+                opacity: 1;
+                -webkit-transition-delay: .4s;
+                transition-delay: .4s;
+            }
+
+            #deleteItim:hover > .icon-wrapper .icon {
+                transform: scale(1.1);
+            }
+
+                #deleteItim:hover > .icon-wrapper .icon path {
+                    stroke: black;
+                }
+
+    .paragraph {
+        color: black;
+        visibility: hidden;
+        opacity: 0;
+        font-size: 18px;
+        margin-right: 50px;
+        -webkit-transition: .2s linear;
+        transition: .2s linear;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .icon-wrapper {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon {
+        transform: scale(.9);
+        transition: .2s linear;
+    }
+
+        .icon path {
+            stroke: #000;
+            stroke-width: 2px;
+            -webkit-transition: .2s linear;
+            transition: .2s linear;
+        }
+
+    /*رجوع خلف*/
+    #btnBack {
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: 2px;
+        background: none;
+        color: white;
+        position: relative;
+        outline: none;
+        border: none;
+        height: 50px;
+        width: 100%;
+        font-size: 14px;
+        z-index: 2;
+        transition: 0.01s 0.23s ease-out all;
+        overflow: hidden;
+        background-color: #e1dfdf;
+    }
+
+        #btnBack:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 55%;
+            background: #303030;
+            z-index: -1;
+            transition: 0.3s ease-in all;
+        }
+
+        #btnBack:after {
+            content: "";
+            position: absolute;
+            left: -5%;
+            top: 5%;
+            height: 90%;
+            width: 5%;
+            background: white;
+            transition: 0.4s 0.02s ease-in all;
+        }
+
+        #btnBack:hover {
+            cursor: pointer;
+            color: transparent;
+        }
+
+            #btnBack:hover:before {
+                left: 120%;
+                width: 25%;
+            }
+
+            #btnBack:hover:after {
+                left: 100%;
+                width: 70%;
+            }
+
+            #btnBack:hover > .icon-right.after:after {
+                left: -80px;
+                color: white;
+                transition: 0.2s 0.2s ease all;
+            }
+
+            #btnBack:hover > .icon-right.after:before {
+                left: -104px;
+                top: 14px;
+                opacity: 0.2;
+                color: white;
+            }
+
+    .icon-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+        .icon-right:after {
+            font-family: "FontAwesome";
+            content: "→";
+            font-size: 24px;
+            display: inline-block;
+            position: relative;
+            top: 26px;
+            transform: translate3D(0, -55%, 0);
+        }
+
+        .icon-right.after:after {
+            left: -250px;
+            color: black;
+            transition: 0.15s 0.25s ease left, 0.5s 0.05s ease color;
+        }
+
+        .icon-right.after:before {
+            content: "Click Me!";
+            position: absolute;
+            left: -230px;
+            top: 14px;
+            opacity: 0;
+            transition: 0.2s ease-in all;
+        }
+
+    .signature {
+        position: fixed;
+        font-family: sans-serif;
+        font-weight: 100;
+        bottom: 10px;
+        left: 0;
+        letter-spacing: 4px;
+        font-size: 10px;
+        width: 100%;
+        text-align: center;
+        color: white;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+    /*اضافة منتج*/
+    .continue-application {
+        --color: #fff;
+        --background: #404660;
+        --background-hover: #3A4059;
+        --background-left: #2B3044;
+        --folder: #F3E9CB;
+        --folder-inner: #BEB393;
+        --paper: #FFFFFF;
+        --paper-lines: #BBC1E1;
+        --paper-behind: #E1E6F9;
+        --pencil-cap: #fff;
+        --pencil-top: #275EFE;
+        --pencil-middle: #fff;
+        --pencil-bottom: #5C86FF;
+        --shadow: rgba(13, 15, 25, .2);
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 19px;
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        padding: 17px 29px 17px 69px;
+        transition: background 0.3s;
+        color: var(--color);
+        background: var(--bg, var(--background));
+        width: 100%;
+    }
+
+        .continue-application > div {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 53px;
+            position: absolute;
+            overflow: hidden;
+            border-radius: 5px 0 0 5px;
+            background: var(--background-left);
+        }
+
+            .continue-application > div .folder {
+                width: 23px;
+                height: 27px;
+                position: absolute;
+                left: 15px;
+                top: 13px;
+            }
+
+                .continue-application > div .folder .top {
+                    left: 0;
+                    top: 0;
+                    z-index: 2;
+                    position: absolute;
+                    transform: translateX(var(--fx, 0));
+                    transition: transform 0.4s ease var(--fd, 0.3s);
+                }
+
+                    .continue-application > div .folder .top svg {
+                        width: 24px;
+                        height: 27px;
+                        display: block;
+                        fill: var(--folder);
+                        transform-origin: 0 50%;
+                        transition: transform 0.3s ease var(--fds, 0.45s);
+                        transform: perspective(120px) rotateY(var(--fr, 0deg));
+                    }
+
+                .continue-application > div .folder:before, .continue-application > div .folder:after,
+                .continue-application > div .folder .paper {
+                    content: "";
+                    position: absolute;
+                    left: var(--l, 0);
+                    top: var(--t, 0);
+                    width: var(--w, 100%);
+                    height: var(--h, 100%);
+                    border-radius: 1px;
+                    background: var(--b, var(--folder-inner));
+                }
+
+                .continue-application > div .folder:before {
+                    box-shadow: 0 1.5px 3px var(--shadow), 0 2.5px 5px var(--shadow), 0 3.5px 7px var(--shadow);
+                    transform: translateX(var(--fx, 0));
+                    transition: transform 0.4s ease var(--fd, 0.3s);
+                }
+
+                .continue-application > div .folder:after,
+                .continue-application > div .folder .paper {
+                    --l: 1px;
+                    --t: 1px;
+                    --w: 21px;
+                    --h: 25px;
+                    --b: var(--paper-behind);
+                }
+
+                .continue-application > div .folder:after {
+                    transform: translate(var(--pbx, 0), var(--pby, 0));
+                    transition: transform 0.4s ease var(--pbd, 0s);
+                }
+
+                .continue-application > div .folder .paper {
+                    z-index: 1;
+                    --b: var(--paper);
+                }
+
+                    .continue-application > div .folder .paper:before, .continue-application > div .folder .paper:after {
+                        content: "";
+                        width: var(--wp, 14px);
+                        height: 2px;
+                        border-radius: 1px;
+                        transform: scaleY(0.5);
+                        left: 3px;
+                        top: var(--tp, 3px);
+                        position: absolute;
+                        background: var(--paper-lines);
+                        box-shadow: 0 12px 0 0 var(--paper-lines), 0 24px 0 0 var(--paper-lines);
+                    }
+
+                    .continue-application > div .folder .paper:after {
+                        --tp: 6px;
+                        --wp: 10px;
+                    }
+
+            .continue-application > div .pencil {
+                height: 2px;
+                width: 3px;
+                border-radius: 1px 1px 0 0;
+                top: 8px;
+                left: 105%;
+                position: absolute;
+                z-index: 3;
+                transform-origin: 50% 19px;
+                background: var(--pencil-cap);
+                transform: translateX(var(--pex, 0)) rotate(35deg);
+                transition: transform 0.4s ease var(--pbd, 0s);
+            }
+
+                .continue-application > div .pencil:before, .continue-application > div .pencil:after {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    background: var(--b, linear-gradient(var(--pencil-top) 55%, var(--pencil-middle) 55.1%, var(--pencil-middle) 60%, var(--pencil-bottom) 60.1%));
+                    width: var(--w, 5px);
+                    height: var(--h, 20px);
+                    border-radius: var(--br, 2px 2px 0 0);
+                    top: var(--t, 2px);
+                    left: var(--l, -1px);
+                }
+
+                .continue-application > div .pencil:before {
+                    -webkit-clip-path: polygon(0 5%, 5px 5%, 5px 17px, 50% 20px, 0 17px);
+                    clip-path: polygon(0 5%, 5px 5%, 5px 17px, 50% 20px, 0 17px);
+                }
+
+                .continue-application > div .pencil:after {
+                    --b: none;
+                    --w: 3px;
+                    --h: 6px;
+                    --br: 0 2px 1px 0;
+                    --t: 3px;
+                    --l: 3px;
+                    border-top: 1px solid var(--pencil-top);
+                    border-right: 1px solid var(--pencil-top);
+                }
+
+        .continue-application:before, .continue-application:after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 2px;
+            border-radius: 1px;
+            background: var(--color);
+            transform-origin: 9px 1px;
+            transform: translateX(var(--cx, 0)) scale(0.5) rotate(var(--r, -45deg));
+            top: 26px;
+            right: 16px;
+            transition: transform 0.3s;
+        }
+
+        .continue-application:after {
+            --r: 45deg;
+        }
+
+        .continue-application:hover {
+            --cx: 2px;
+            --bg: var(--background-hover);
+            --fx: -40px;
+            --fr: -60deg;
+            --fd: .15s;
+            --fds: 0s;
+            --pbx: 3px;
+            --pby: -3px;
+            --pbd: .15s;
+            --pex: -24px;
+        }
+
+</style>
+
+<div class="container" style="padding:150px 40px 150px 40px;direction: rtl;">
+    <div>
+        <button class="continue-application hvr-pulse" onclick="location.href='@Url.Action("Create", "SportAndEntertainment")'">
+            <div>
+                <div class="pencil"></div>
+                <div class="folder">
+                    <div class="top">
+                        <svg viewBox="0 0 24 27">
+                            <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                        </svg>
+                    </div>
+                    <div class="paper"></div>
+                </div>
+            </div>
+            اضافة منتج
+        </button>
+    </div>
+    <br />
+    <br />
+
+    <main class="table">
+        <section class="table__body">
+            <table id="myTable" class="table table-striped table-hover" style="border-style: double;width:100%;padding:0px;border: #1c231b;">
+                <thead style="background: darkcyan;">
+                    <tr>
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            @Html.DisplayNameFor(model => model.SportAndEntertainmentName)
+                        </th>
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            @Html.DisplayNameFor(model => model.Quantity)
+                        </th>
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            @Html.DisplayNameFor(model => model.MeasruingUnit)
+                        </th>
+
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            @Html.DisplayNameFor(model => model.Pirce)
+                        </th>
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            @Html.DisplayNameFor(model => model.ImageUrl)
+                        </th>
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            @Html.DisplayNameFor(model => model.NameCompany)
+                        </th>
+                        <th style="text-align: center;font-family: 'Cairo', sans-serif;">
+                            الاجراات
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: center;font-family: 'Cairo', sans-serif;"> @Html.DisplayFor(modelItem => item.SportAndEntertainmentName) </td>
+                            <td style="text-align: center;font-family: 'Cairo', sans-serif;"> @Html.DisplayFor(modelItem => item.Quantity) </td>
+                            <td style="text-align: center;font-family: 'Cairo', sans-serif;"> @Html.DisplayFor(modelItem => item.MeasruingUnit) </td>
+                            <td style="text-align: center;font-family: 'Cairo', sans-serif;"> @Html.DisplayFor(modelItem => item.Pirce) </td>
+                            <td style="text-align: center;font-family: 'Cairo', sans-serif;"> @Html.DisplayFor(modelItem => item.Description)</td>
+                            <td style="text-align: center;font-family: 'Cairo', sans-serif;"> <img id="profilePicture" alt="profile" src="data:image/*;base64,@(Convert.ToBase64String(@item.ImageUrl))"></td>
+                            <td style="text-align: center;font-family: 'Cairo', sans-serif;"> @Html.DisplayFor(modelItem => item.NameCompany) </td>
+                            <td style="width: 20px;">
+                                <a id="deleteItim" href="@Url.Action("Edit", "SportAndEntertainment", new { id = item.SportAndEntertainmentId })">
+                                    <p class="paragraph" style="margin-top: 20px;">تعديل</p>
+                                    <span class="icon-wrapper">
+                                        <i class="bi bi-pencil"></i>
+                                    </span>
+                                </a>
+
+                                <div class="line-dec" style="margin: 20px 20px 20px 0;"></div>
+                                <a id="deleteItim" href="@Url.Action("Details", "SportAndEntertainment", new { id = item.SportAndEntertainmentId })">
+                                    <p class="paragraph" style="margin-top: 20px;">التفاصيل</p>
+                                    <span class="icon-wrapper">
+                                        <i class="bi bi-info-circle"></i>
+                                    </span>
+                                </a>
+                                <div class="line-dec" style="margin: 20px 20px 20px 0;"></div>
+                                <button class="deleteBtn" id="deleteItim" data-id="@item.SportAndEntertainmentId">
+                                    <p class="paragraph" style="margin-top: 20px;"> حذف </p>
+                                    <span class="icon-wrapper">
+                                        <i class="bi bi-trash" style="color: darkred;"></i>
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <br />
+    <br />
+    <button id="btnBack" onclick="location.href='@Url.Action("Index", "Home")'">
+        <span class="icon-right"></span>
+        <span class="icon-right after"></span>
+    </button>
+</div>
+
+<form id="deleteForm" asp-action="Delete" method="post">
+    <input type="hidden" Name="SportAndEntertainmentId" id="SportAndEntertainmentId" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('.deleteBtn').click(function (e) {
+                swal({
+                    title: "عملية حذف?",
+                    text: "هل انت متاكد من عملية الحذف?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                    if (confirm) {
+                        var btn = $(this);
+                        var id = btn.data("id");
+                        $('#SportAndEntertainmentId').val(id);
+                        $('#deleteForm').submit();
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

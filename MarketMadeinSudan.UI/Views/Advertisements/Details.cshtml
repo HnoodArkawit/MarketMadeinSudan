@@ -1,0 +1,242 @@
+﻿@model MarketMadeinSudan.Domin.Advertisements
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+    /*رجوع خلف*/
+    #btnBack {
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: 2px;
+        background: none;
+        color: white;
+        position: relative;
+        outline: none;
+        border: none;
+        height: 50px;
+        width: 100%;
+        font-size: 14px;
+        z-index: 2;
+        transition: 0.01s 0.23s ease-out all;
+        overflow: hidden;
+        background-color: #e1dfdf;
+    }
+
+        #btnBack:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 55%;
+            background: #303030;
+            z-index: -1;
+            transition: 0.3s ease-in all;
+        }
+
+        #btnBack:after {
+            content: "";
+            position: absolute;
+            left: -5%;
+            top: 5%;
+            height: 90%;
+            width: 5%;
+            background: white;
+            transition: 0.4s 0.02s ease-in all;
+        }
+
+        #btnBack:hover {
+            cursor: pointer;
+            color: transparent;
+        }
+
+            #btnBack:hover:before {
+                left: 120%;
+                width: 25%;
+            }
+
+            #btnBack:hover:after {
+                left: 100%;
+                width: 70%;
+            }
+
+            #btnBack:hover > .icon-right.after:after {
+                left: -80px;
+                color: white;
+                transition: 0.2s 0.2s ease all;
+            }
+
+            #btnBack:hover > .icon-right.after:before {
+                left: -104px;
+                top: 14px;
+                opacity: 0.2;
+                color: white;
+            }
+
+    .icon-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+        .icon-right:after {
+            font-family: "FontAwesome";
+            content: "→";
+            font-size: 24px;
+            display: inline-block;
+            position: relative;
+            top: 26px;
+            transform: translate3D(0, -55%, 0);
+        }
+
+        .icon-right.after:after {
+            left: -250px;
+            color: black;
+            transition: 0.15s 0.25s ease left, 0.5s 0.05s ease color;
+        }
+
+        .icon-right.after:before {
+            content: "Click Me!";
+            position: absolute;
+            left: -230px;
+            top: 14px;
+            opacity: 0;
+            transition: 0.2s ease-in all;
+        }
+
+    .signature {
+        position: fixed;
+        font-family: sans-serif;
+        font-weight: 100;
+        bottom: 10px;
+        left: 0;
+        letter-spacing: 4px;
+        font-size: 10px;
+        width: 100%;
+        text-align: center;
+        color: white;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+    /*الصورة*/
+    .img-area {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        background: var(--grey);
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+        .img-area .icon {
+            font-size: 100px;
+        }
+
+        .img-area h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .img-area p {
+            color: #999;
+        }
+
+            .img-area p span {
+                font-weight: 600;
+            }
+
+        .img-area img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-position: center;
+            z-index: 100;
+        }
+
+        .img-area::before {
+            content: attr(data-img);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: all .3s ease;
+            z-index: 200;
+        }
+
+        .img-area.active:hover::before {
+            opacity: 1;
+        }
+
+</style>
+<div class="container" style="direction: rtl;">
+
+    <section class="latest-podcast-section section-padding pb-0" id="section_2">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="col-lg-12 col-12">
+                    <div class="section-title-wrap mb-5">
+                        <h4 class="section-title">تفاصيل المنتج</h4>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12 mb-4 mb-lg-0">
+                    <div class="custom-block d-flex" style="padding:0px;margin-bottom:0px">
+                                <div class="carousel-item active">
+                                    <img src="data:image/*;base64,@(Convert.ToBase64String(Model.ImageUrl))" class="d-block w-100 h-100" alt="ImageUrl">
+                                </div>
+                    </div>
+                    <div class="custom-block d-flex" style="margin-top:0px;">
+                        <div class="custom-block-info">
+                            <h5 class="mb-2" style="text-align: center;">
+                                @Html.DisplayFor(Model => Model.ProductName)
+                            </h5>
+                            <br />
+                            <h5 class="mb-2" style="text-align: center;">
+                                @Html.DisplayFor(Model => Model.NameCompany)
+                            </h5>
+                            <h5 class="mb-2" style="text-align: center;">
+                                @Html.DisplayFor(Model => Model.PirceGo)
+                            </h5>
+                            <h5 class="mb-2" style="text-align: center;">
+                                @Html.DisplayFor(Model => Model.PirceEnd)
+                            </h5>
+                            <h5 class="mb-2" style="text-align: center;">
+                                @Html.DisplayFor(Model => Model.Quantity)
+                            </h5>
+
+                            <br />
+                            <p class="mb-0">@Html.DisplayFor(Model => Model.Description)</p>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <button id="btnBack">
+        <a class="nav-link" href="~/Advertisements/Index">رجوع للخلف</a>
+        <span class="icon-right"></span>
+        <span class="icon-right after"></span>
+    </button>
+</div>

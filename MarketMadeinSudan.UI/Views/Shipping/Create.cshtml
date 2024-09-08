@@ -1,0 +1,1136 @@
+﻿@model MarketMadeinSudan.Application.Features.FolderShipping.Commands.CreateShipping.CreateShippingCommand
+
+@{
+    ViewData["Title"] = "Create";
+}
+<style>
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: 0;
+        box-shadow: none;
+        border: 1px solid #ced4da;
+        background: white;
+        background-image: none;
+        flex: 1;
+        padding: 0 .5em;
+        color: #000;
+        cursor: pointer;
+        font-size: 1em;
+        text-align: center;
+    }
+
+        select::-ms-expand {
+            display: none;
+        }
+
+    .select {
+        position: relative;
+        display: flex;
+        height: 58px;
+        line-height: 3;
+        background: #5c6664;
+        overflow: hidden;
+        border-radius: .25em;
+    }
+
+        .select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 1em;
+            background: #b2baba;
+            cursor: pointer;
+            pointer-events: none;
+            transition: .25s all ease;
+            height: 58px;
+        }
+
+        .select:hover::after {
+            color: #23b499;
+        }
+
+    /*خقل الملفات*/
+    .form {
+        background-color: #fff;
+        box-shadow: 0 10px 60px rgb(218, 229, 255);
+        border: 1px solid rgb(159, 159, 160);
+        border-radius: 20px;
+        padding: 2rem .7rem .7rem .7rem;
+        text-align: center;
+        font-size: 1.125rem;
+        max-width: 320px;
+    }
+
+    .form-title {
+        color: #000000;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+
+    .form-paragraph {
+        margin-top: 10px;
+        font-size: 0.9375rem;
+        color: rgb(105, 105, 105);
+    }
+
+    .drop-container {
+        background-color: #fff;
+        position: relative;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin-top: 2.1875rem;
+        border-radius: 10px;
+        border: 2px dashed rgb(171, 202, 255);
+        color: #444;
+        cursor: pointer;
+        transition: background .2s ease-in-out, border .2s ease-in-out;
+    }
+
+        .drop-container:hover {
+            background: rgba(0, 140, 255, 0.164);
+            border-color: rgba(17, 17, 17, 0.616);
+        }
+
+            .drop-container:hover .drop-title {
+                color: #222;
+            }
+
+    .drop-title {
+        color: #444;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        transition: color .2s ease-in-out;
+    }
+
+    #file-input {
+        width: 350px;
+        max-width: 100%;
+        color: #444;
+        padding: 2px;
+        background: #fff;
+        border-radius: 10px;
+        border: 1px solid rgba(8, 8, 8, 0.288);
+    }
+
+        #file-input::file-selector-button {
+            border: none;
+            background: #084cdf;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+        }
+
+            #file-input::file-selector-button:hover {
+                background: #0d45a5;
+            }
+    /*موافقة الناشر*/
+    .checkbox-wrapper-23 *,
+    .checkbox-wrapper-23 *:after,
+    .checkbox-wrapper-23 *:before {
+        box-sizing: border-box;
+    }
+
+    .checkbox-wrapper-23 input {
+        position: absolute;
+        opacity: 0;
+    }
+
+        .checkbox-wrapper-23 input:checked + label svg path {
+            stroke-dashoffset: 0;
+        }
+
+        .checkbox-wrapper-23 input:focus + label {
+            transform: scale(1.03);
+        }
+
+        .checkbox-wrapper-23 input + label {
+            display: block;
+            border: 2px solid rgb(58, 5, 250);
+            width: var(--size);
+            height: var(--size);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+            .checkbox-wrapper-23 input + label:active {
+                transform: scale(1.05);
+                border-radius: 12px;
+            }
+
+            .checkbox-wrapper-23 input + label svg {
+                pointer-events: none;
+                padding: 5%;
+            }
+
+                .checkbox-wrapper-23 input + label svg path {
+                    fill: none;
+                    stroke: green;
+                    stroke-width: 4px;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-dasharray: 100;
+                    stroke-dashoffset: 101;
+                    transition: all 250ms cubic-bezier(1,0,.37,.91);
+                }
+
+    /*phone*/
+    .ui-wrapper {
+        --height: 40px;
+        --background: #fff;
+        --text-color: rgb(73, 73, 73);
+        --border-color: rgb(185, 184, 184);
+        --border-focus-color: rgb(0, 110, 255);
+        --shadow-color: rgba(34, 60, 80, 0.2);
+        --shadow-focus-color: rgba(0, 110, 255, 0.2);
+        --dropdown-button-color: #e6e6e6;
+        --dropdown-button-hover-color: #dad9d9;
+    }
+
+        .ui-wrapper *,
+        .ui-wrapper *::before,
+        .ui-wrapper *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            color: var(--text-color);
+        }
+
+    .ui-wrapper {
+        width: 100%;
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        border-radius: 10px;
+        position: relative;
+        border: 1px solid var(--border-color);
+        background-color: var(--background);
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding-right: 10px;
+        -webkit-box-shadow: 0px 2px 5px 0px var(--shadow-color);
+        box-shadow: 0px 2px 5px 0px var(--shadow-color);
+        -webkit-transition: .4s;
+        -o-transition: .4s;
+        transition: .4s;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        .ui-wrapper > input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+            width: 0;
+            height: 0;
+            opacity: 0;
+            position: absolute;
+            left: 9999px;
+        }
+
+    .dropdown-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        padding: 0 10px;
+        cursor: pointer;
+        border-radius: 9px 0 0 9px;
+        background-color: var(--dropdown-button-color);
+    }
+
+        .dropdown-container::before {
+            content: "🇦🇹";
+            font-size: 20px;
+            background: none !important;
+        }
+
+        .dropdown-container::after {
+            content: "";
+            background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNDk0OTQ5IiB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiCiAgICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxwYXRoCiAgICAgICAgZD0ibTM4MC4zOSA0ODQuNzkgMzA3LjA0LTMwNS45OWMxNi43NjYtMTcuODEyIDE2Ljc2Ni00NS4wNTkgMC02MS44MjgtMTYuNzY2LTE2Ljc2Ni00NS4wNTktMTYuNzY2LTYxLjgyOCAwbC0yNzUuNiAyNzUuNi0yNzUuNi0yNzUuNmMtMTcuODEyLTE2Ljc2Ni00NS4wNTktMTYuNzY2LTYxLjgyOCAwLTE2Ljc2NiAxNi43NjYtMTYuNzY2IDQ0LjAxMiAwIDYxLjgyOGwzMDUuOTkgMzA1Ljk5YzE3LjgxMiAxNi43NjYgNDUuMDU5IDE2Ljc2NiA2MS44MjggMHoiCiAgICAgICAgZmlsbC1ydWxlPSJjdXJyZW50Q29sb3IiIC8+Cjwvc3ZnPg==");
+            width: 12px;
+            height: 12px;
+            background-position: center;
+            background-size: cover;
+            margin-left: 5px;
+            -webkit-transition: .2s;
+            -o-transition: .2s;
+            transition: .2s;
+        }
+
+    .select-wrapper {
+        width: var(--width);
+        position: absolute;
+        top: calc(var(--height) + 20px);
+        left: 0;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: .2s;
+        -o-transition: .2s;
+        transition: .2s;
+    }
+
+        .select-wrapper ul {
+            width: 100%;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 0;
+            list-style: none;
+            height: 300px;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            white-space: nowrap;
+        }
+
+            .select-wrapper ul li {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                padding: 5px;
+                border-radius: 5px;
+            }
+
+                .select-wrapper ul li label {
+                    width: 100%;
+                }
+
+                .select-wrapper ul li,
+                .select-wrapper ul li * {
+                    cursor: pointer;
+                }
+
+                    .select-wrapper ul li:hover {
+                        background: lightgray;
+                    }
+
+                    .select-wrapper ul li span {
+                        display: inline-block;
+                        margin-right: 15px;
+                    }
+
+    .input-wrapper {
+        width: 100%;
+        padding-left: 10px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        row-gap: 2px;
+    }
+
+        .input-wrapper legend {
+            font-size: 11px;
+        }
+
+        .input-wrapper .textfield {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+            .input-wrapper .textfield::before {
+                content: "+31";
+                margin-right: 5px;
+                white-space: nowrap;
+            }
+
+            .input-wrapper .textfield input {
+                width: 100%;
+                font-size: 16px;
+                outline: none;
+                border: none;
+                background: none;
+            }
+
+    .invalid-msg {
+        font-size: 12px;
+        position: absolute;
+        color: red;
+        top: 115%;
+        left: 0;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: .2s;
+        -o-transition: .2s;
+        transition: .2s;
+    }
+
+    /* actions */
+
+    #phonenumber:invalid + .invalid-msg {
+        top: 110%;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .ui-wrapper:focus-within {
+        border-color: var(--border-focus-color);
+        -webkit-box-shadow: 0px 2px 5px 0px var(--shadow-focus-color);
+        box-shadow: 0px 2px 5px 0px var(--shadow-focus-color);
+    }
+
+    .dropdown-container:hover {
+        background-color: var(--dropdown-button-hover-color);
+    }
+
+    .dropdown-checkbox:checked ~ .select-wrapper {
+        top: calc(var(--height) + 5px);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .dropdown-checkbox:checked + .dropdown-container::after {
+        rotate: 180deg;
+        translate: 0 -2px;
+    }
+
+
+
+    .ui-wrapper input#Sudan:checked ~ .dropdown-container::before,
+    .ui-wrapper input#Sudan:checked ~ .select-wrapper li.Sweden {
+        content: "🇸🇩";
+        background-color: lightgray;
+    }
+
+    .ui-wrapper input#Sudan:checked ~ .input-wrapper .textfield::before {
+        content: "+249";
+    }
+
+
+
+    /*image*/
+    .containerimage {
+        width: 100%;
+        background: #fff;
+        border-radius: 30px;
+    }
+
+    .img-area {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        background: var(--grey);
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+        .img-area .icon {
+            font-size: 100px;
+        }
+
+        .img-area h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .img-area p {
+            color: #999;
+        }
+
+            .img-area p span {
+                font-weight: 600;
+            }
+
+        .img-area img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-position: center;
+            z-index: 100;
+        }
+
+        .img-area::before {
+            content: attr(data-img);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: all .3s ease;
+            z-index: 200;
+        }
+
+        .img-area.active:hover::before {
+            opacity: 1;
+        }
+
+
+    .select-image:hover {
+        background: var(--dark-blue);
+    }
+    /*bottun*/
+    .scene {
+        width: 10em;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cube {
+        color: #ccc;
+        cursor: pointer;
+        font-family: 'Roboto', sans-serif;
+        transition: all 0.85s cubic-bezier(.17,.67,.14,.93);
+        transform-style: preserve-3d;
+        transform-origin: 100% 50%;
+        height: 4em;
+        margin-bottom: 10px;
+    }
+
+        .cube:hover {
+            transform: rotateX(-90deg);
+        }
+
+    .side {
+        box-sizing: border-box;
+        position: absolute;
+        display: inline-block;
+        height: 4em;
+        width: 23em;
+        text-align: center;
+        text-transform: uppercase;
+        padding-top: 1.5em;
+        font-weight: bold;
+    }
+
+    .top {
+        background: wheat;
+        color: #8b8a97;
+        transform: rotateX(90deg) translate3d(0, 0, 2em);
+        box-shadow: inset 0 0 0 5px #fff;
+    }
+
+    .front {
+        background: #b2baba;
+        color: #000;
+        box-shadow: inset 0 0 0 5px #fff;
+        transform: translate3d(0, 0, 2em);
+    }
+
+</style>
+<section class="contact-section section-padding pt-0">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8 col-12 mx-auto">
+                <div class="section-title-wrap mb-5">
+                    <h4 class="section-title">اضافة مؤسسة</h4>
+                </div>
+
+                <form method="post" class="needs-validation custom-form contact-form" role="form" asp-action="Create" enctype="multipart/form-data" novalidate>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-floating">
+                                <input asp-for="NameCompany" type="text" name="NameCompany" id="NameCompany" class="form-control" placeholder="NameCompany" requied="">
+                                <label asp-for="NameCompany">اسم المؤسسة</label>
+                                <div class="invalid-feedback">
+                                    اسم المؤسسة مطلوب لتعامل معك
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-floating">
+                                <input asp-for="AddressCompany" type="text" name="Address" id="Address" class="form-control" placeholder="Address" requied="">
+                                <label asp-for="AddressCompany"> عنوان المؤسسة</label>
+                                <div class="invalid-feedback">
+                                    عنوان المؤسسة مطلوب للوصول اليك
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input asp-for="EmailCompany" type="email" name="Email" id="Email" class="form-control" placeholder="Email" requied="">
+                                        <label asp-for="EmailCompany">البريد الالكتروني example@example.com</label>
+                                        <div class="invalid-feedback">
+                                            البريد الالكتروني مطلوب بالصيغة اعلاه
+                                        </div>
+                                    </div>
+                                    <div class="form-floating">
+                                        <div class="ui-wrapper" style="direction: ltr;">
+                                            <input checked="" id="Sudan" name="flag " type="radio">
+                                            <input class="dropdown-checkbox" name="dropdown" id="dropdown" type="checkbox">
+                                            <label class="dropdown-container" for="dropdown"></label>
+                                            <div class="input-wrapper">
+                                                <legend>
+                                                    <label for="phonenumber">
+                                                        Phonenumber*
+                                                    </label>
+                                                </legend>
+                                                <div class="textfield">
+                                                    <input asp-for="PhoneCompany" pattern="\d+" maxlength="9" id="phonenumber" type="text" name="Phone" placeholder="PhoneNumber" required="">
+                                                    <div class="invalid-feedback">
+                                                        الهاتف مطلوب لتواصل معك
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="select-wrapper" style="z-index: 1;">
+                                                <ul>
+                                                    <li class="Sudan"><label for="Sudan"><span>🇸🇩</span>Sudan (+249)</label></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+@*                                 <div class="col-md-6">
+                                    <div class="containerimage">
+                                        <input asp-for="" type="file" id="file" accept="image/*" hidden>
+                                        <input type="file" id="file" accept="image/*" hidden>
+                                        <div class="img-area" data-img="">
+                                            <img class="img-area img" src="~/images/noimage.png" />
+                                        </div>
+                                        <div class="scene">
+                                            <div class="cube">
+                                                <span class="side top">حجمها اقل من 2 ميقا</span>
+                                                <span class="side front">اختار صورة</span>
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            الصورة مطلوب للتعرف عليك
+                                        </div>
+
+                                    </div>
+
+                                </div>
+ *@                            </div>
+                        </div>
+                        <div class="col-lg-12 col-12">
+                            <div class="form-floating" style="margin-top: 20px;">
+                                @Html.TextAreaFor(model => model.DescriptionShipping, new { @class = "form-control",@id="message",@style="height: 300px;",@placeholder="تفاصيل المنتج"})
+                                <label asp-for="DescriptionShipping">تفاصيل الشركة</label>
+                                <div class="invalid-feedback">
+                                    تفاصيل المنتج مطلوب
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="lead" style="margin: 5px;padding-top:0px;text-align: center;">
+                                {يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ * ارْجِعِي إِلَى رَبِّكِ رَاضِيَةً مَرْضِيَّةً * فَادْخُلِي فِي عِبَادِي * وَادْخُلِي جَنَّتِي}
+                            </p>
+                        </div>
+                        <br />
+                        <div class="checkbox-wrapper-23">
+                            <input type="checkbox" id="check-23" onclick="document.getElementById('save-button').disabled = !this.checked;"> 
+                            اوافق علي الشروط والاحكام
+                            <label for="check-23" style="--size: 30px">
+                                <svg viewBox="0,0,50,50">
+                                    <path d="M5 30 L 20 45 L 45 5"></path>
+                                </svg>
+                            </label>
+                        </div>
+                        <br />
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                                    <input type="submit" id="save-button" disabled value="اضافة مؤسسة" class=" btn btn-outline-success fa fa-save col-12" style="padding:10px;border-radius: var(--border-radius-large);" />
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                                    <a asp-action="Index" class="btn btn-outline-info fa fa-rotate-back col-12" style="padding:10px;border-radius: var(--border-radius-large);">الرجوع للخلف</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        const selectImage = document.querySelector('.scene');
+        const inputFile = document.querySelector('#file');
+        const imgArea = document.querySelector('.img-area');
+
+        selectImage.addEventListener('click', function () {
+            inputFile.click();
+        })
+
+        inputFile.addEventListener('change', function () {
+            const image = this.files[0]
+            if (image.size < 2000000) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const allImg = imgArea.querySelectorAll('img');
+                    allImg.forEach(item => item.remove());
+                    const imgUrl = reader.result;
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    imgArea.appendChild(img);
+                    imgArea.classList.add('active');
+                    imgArea.dataset.img = image.name;
+                }
+                reader.readAsDataURL(image);
+            } else {
+                alert("Image size more than 2MB");
+            }
+        })
+    </script>
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+    <script>
+        $(function () {
+            $('.addcompany').click(function (e) {
+                sweetAlert("تم تسجيل المؤسسة", "سيتم التواصل معك في اقرب فرصة لاكمال الإجراءت", "success");
+            });
+        });
+    </script>
+
+}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+
+
+
+
+
+@*<nav class="desktop-navigation-menu">
+
+    <div class="container">
+
+        <ul class="desktop-menu-category-list">
+
+            <li class="menu-category">
+                <a href="~/Home/Index" class="menu-title">الصفحة الرئسية</a>
+            </li>
+
+            <li class="menu-category">
+                <a href="#" class="menu-title">اقسام المنتجات</a>
+                <div class="dropdown-panel">
+
+                    <ul class="dropdown-panel-list">
+                        <li class="panel-list-item">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexAccessories">الاكستسوارات</a>
+                            </button>
+                        </li>
+                        <li class="panel-list-item" style="margin-top: 20px;">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexAspires">الاسبيرات</a>
+                            </button>
+                        </li>
+                        <li class="panel-list-item" style="margin-top: 20px;">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/indexother">اخري</a>
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="dropdown-panel-list">
+                        <li class="panel-list-item">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexElectricalAndElctronic">الادوات الكهربائية والإلكترونية</a>
+                            </button>
+                        </li>
+                        <li class="panel-list-item" style="margin-top: 20px;">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexHouseholdProducts">المنتجات المنزلي</a>
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="dropdown-panel-list">
+                        <li class="panel-list-item">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexFabrics">الاقمشة</a>
+                            </button>
+                        </li>
+                        <li class="panel-list-item" style="margin-top: 20px;">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexFood">المواد الغذائية</a>
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="dropdown-panel-list">
+                        <li class="panel-list-item">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexWatchesAndJewelry">الساعات والمجوهرات</a>
+                            </button>
+                        </li>
+                        <li class="panel-list-item" style="margin-top: 20px;">
+                            <button id="buttonLink" class="btnLink">
+                                <a class="nav-link" style="width: 250px;" href="~/Home/IndexSportAndEntertainment">الرياضة والترفيه</a>
+                            </button>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            <li class="menu-category">
+                <a href="~/Email/Send" class="menu-title">تواصل معانا</a>
+            </li>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("User"))
+                {
+
+                    <li class="menu-category">
+                        <a href="~/Shipping/index" class="menu-title">اضف مؤسسة</a>
+                    </li>
+
+                    <li class="menu-category">
+                        <a href="~/OrderDetails/IndexCustomer" class="menu-title">طلباتي</a>
+                    </li>
+
+                    <li class="menu-category">
+                        <a href="~/Cart/AllCart" class="menu-title">سلتي</a>
+                    </li>
+
+                }
+                if (User.IsInRole("Admin"))
+                {
+                    <li class="menu-category">
+                        <a href="~/Users/AdminPage" class="menu-title">لوحة التحكم</a>
+                    </li>
+                }
+                if (User.IsInRole("Shipping"))
+                {
+                    <li class="menu-category">
+                        <a href="~/Shipping/ShippingControl" class="menu-title">لوحة التحكم</a>
+
+                    </li>
+                }
+            }
+
+        </ul>
+
+    </div>
+
+</nav>
+
+<nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
+
+            <div class="menu-top">
+                <h2 class="menu-title">Menu</h2>
+
+                <button class="menu-close-btn" data-mobile-menu-close-btn>
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+            </div>
+
+            <ul class="mobile-menu-category-list">
+
+                <li class="menu-category">
+                    <a href="~/Home/Index" class="menu-title">Home</a>
+                </li>
+
+                <li class="menu-category">
+
+                    <button class="accordion-menu" data-accordion-btn>
+                        <p class="menu-title">اصناف المنتجات</p>
+
+                        <div>
+                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                        </div>
+                    </button>
+
+                    <ul class="submenu-category-list" data-accordion>
+
+                        <li class="submenu-category">
+                            <a href="~/Accessories/Index" class="submenu-title">الاكسسوارات</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="~/AgriculturalCrops/Index" class="submenu-title">المحاصيل الزراعية</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="~/Aspires/Index" class="submenu-title">الاسبيرات</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="~/ElectricalAndElctronic/Index" class="submenu-title">الادوات الكهربائية والإلكترونية</a>
+                        </li>
+
+                                                <li class="submenu-category">
+                            <a href="~/Fabrics/Index" class="submenu-title">الاقمشة</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="~/Food/Index" class="submenu-title">المواد الغذائية</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="~/HouseholdProducts/Index" class="submenu-title">المنتجات المنزلية</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="~/SportAndEntertainment/Index" class="submenu-title">الرياضة والترفيه</a>
+                        </li>
+                        <li class="submenu-category">
+                            <a href="~/WatchesAndJewelry/Index" class="submenu-title">الساعات والمجوهرات</a>
+                        </li>
+                                                <li class="submenu-category">
+                            <a href="~/Other/Index" class="submenu-title">اخري</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="menu-category">
+
+                    <button class="accordion-menu" data-accordion-btn>
+                        <p class="menu-title">Women's</p>
+
+                        <div>
+                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                        </div>
+                    </button>
+
+                    <ul class="submenu-category-list" data-accordion>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Dress & Frock</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Earrings</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Necklace</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Makeup Kit</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="menu-category">
+
+                    <button class="accordion-menu" data-accordion-btn>
+                        <p class="menu-title">Jewelry</p>
+
+                        <div>
+                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                        </div>
+                    </button>
+
+                    <ul class="submenu-category-list" data-accordion>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Earrings</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Couple Rings</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Necklace</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Bracelets</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="menu-category">
+
+                    <button class="accordion-menu" data-accordion-btn>
+                        <p class="menu-title">Perfume</p>
+
+                        <div>
+                            <ion-icon name="add-outline" class="add-icon"></ion-icon>
+                            <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+                        </div>
+                    </button>
+
+                    <ul class="submenu-category-list" data-accordion>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Clothes Perfume</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Deodorant</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Flower Fragrance</a>
+                        </li>
+
+                        <li class="submenu-category">
+                            <a href="#" class="submenu-title">Air Freshener</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Blog</a>
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Hot Offers</a>
+                </li>
+
+            </ul>
+
+            <div class="menu-bottom">
+
+                <ul class="menu-category-list">
+
+                    <li class="menu-category">
+
+                        <button class="accordion-menu" data-accordion-btn>
+                            <p class="menu-title">Language</p>
+
+                            <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+                        </button>
+
+                        <ul class="submenu-category-list" data-accordion>
+
+                            <li class="submenu-category">
+                                <a href="#" class="submenu-title">English</a>
+                            </li>
+
+                            <li class="submenu-category">
+                                <a href="#" class="submenu-title">Espa&ntilde;ol</a>
+                            </li>
+
+                            <li class="submenu-category">
+                                <a href="#" class="submenu-title">Fren&ccedil;h</a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                    <li class="menu-category">
+                        <button class="accordion-menu" data-accordion-btn>
+                            <p class="menu-title">Currency</p>
+                            <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+                        </button>
+
+                        <ul class="submenu-category-list" data-accordion>
+                            <li class="submenu-category">
+                                <a href="#" class="submenu-title">USD &dollar;</a>
+                            </li>
+
+                            <li class="submenu-category">
+                                <a href="#" class="submenu-title">EUR &euro;</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <ul class="menu-social-container">
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-twitter"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-linkedin"></ion-icon>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </nav>
+*@

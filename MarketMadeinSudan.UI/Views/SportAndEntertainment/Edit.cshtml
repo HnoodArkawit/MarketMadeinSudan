@@ -1,0 +1,400 @@
+﻿@model MarketMadeinSudan.Application.Features.FolderSportAndEntertainment.Commands.UpdateSportAndEntertainment.UpdateSportAndEntertainmentCommand
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<style>
+    /*متصفح الصور*/
+    #file-input {
+        width: 350px;
+        max-width: 100%;
+        color: #444;
+        padding: 2px;
+        background: #fff;
+        border-radius: 10px;
+        border: 1px solid rgba(8, 8, 8, 0.288);
+    }
+
+        #file-input::file-selector-button {
+            border: none;
+            background: #084cdf;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+        }
+
+            #file-input::file-selector-button:hover {
+                background: #0d45a5;
+            }
+
+    /*image*/
+    .containerimage {
+        width: 100%;
+        background: #fff;
+        border-radius: 30px;
+    }
+
+    .img-area {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        background: var(--grey);
+        border-radius: 15px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+        .img-area .icon {
+            font-size: 100px;
+        }
+
+        .img-area h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .img-area p {
+            color: #999;
+        }
+
+            .img-area p span {
+                font-weight: 600;
+            }
+
+        .img-area img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-position: center;
+            z-index: 100;
+        }
+
+        .img-area::before {
+            content: attr(data-img);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: all .3s ease;
+            z-index: 200;
+        }
+
+        .img-area.active:hover::before {
+            opacity: 1;
+        }
+
+
+    .select-image:hover {
+        background: var(--dark-blue);
+    }
+
+    /*القايمة النسدلة*/
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: 0;
+        box-shadow: none;
+        border: 1px solid #ced4da;
+        background: white;
+        background-image: none;
+        flex: 1;
+        padding: 0 .5em;
+        color: #000;
+        cursor: pointer;
+        font-size: 1em;
+        text-align: center;
+    }
+
+        select::-ms-expand {
+            display: none;
+        }
+
+    .select {
+        position: relative;
+        display: flex;
+        height: 3em;
+        line-height: 3;
+        background: #5c6664;
+        overflow: hidden;
+        border-radius: .25em;
+    }
+
+        .select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 1em;
+            background: #b2baba;
+            cursor: pointer;
+            pointer-events: none;
+            transition: .25s all ease;
+        }
+
+        .select:hover::after {
+            color: #23b499;
+        }
+
+</style>
+<section class="contact-section section-padding pt-0">
+    <div class="container" style="padding:150px 40px 150px 40px;direction: rtl;">
+        <div class="row">
+
+            <div class="col-lg-8 col-12 mx-auto">
+                <div class="section-title-wrap mb-5">
+                    <h4 class="section-title">تعديل منتج</h4>
+                </div>
+
+                <form method="post" class="needs-validation  custom-form contact-form" role="form" novalidate asp-action="Edit" enctype="multipart/form-data">
+                    <div class="row">
+                        <input type="hidden" asp-for="UserId" class="form-control" />
+                        <input type="hidden" asp-for="SportAndEntertainmentId" class="form-control" />
+                        <input type="hidden" asp-for="PublishersId" class="form-control" />
+
+                        <div class="container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="SportAndEntertainmentName" type="text" name="SportAndEntertainmentName" id="SportAndEntertainmentName" class="form-control" placeholder="اسم المنتج" requied>
+                                            <label asp-for="SportAndEntertainmentName">اسم المنتج</label>
+                                            <div class="invalid-feedback">
+                                                اسم المنتج مطلوب لمنتجك
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="Quantity" type="text" name="Quantity" id="Quantity" class="form-control" placeholder="الكمية" required>
+                                            <label asp-for="Quantity">الكمية</label>
+                                            <div class="invalid-feedback">
+                                                الكمية مطلوبة لمنتجك
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <div class="select" style="margin-bottom: 20px;">
+                                                <select asp-for="MeasruingUnit" name="MeasruingUnit" id="MeasruingUnit">
+                                                    <option selected disabled>اختار وحدة قياس</option>
+                                                    <option>متر</option>
+                                                    <option>حبة</option>
+                                                    <option>كرتونة</option>
+                                                    <option>علبة</option>
+                                                    <option>رطل</option>
+                                                    <option>كيلو</option>
+                                                    <option>جوال</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    اختار وحدة قياس مطلوبة لمنتجك
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="Pirce" type="text" name="Pirce" id="Pirce" class="form-control" placeholder="السعر" requied>
+                                            <label asp-for="Pirce">السعر</label>
+                                            <div class="invalid-feedback">
+                                                السعر مطلوب لمنتجك
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div>
+                                            <label asp-for="ImageUrl" class="control-label" style="color: white"></label>
+                                        </div>
+                                        @if (Model.ImageUrl != null)
+                                        {
+                                            <div class="img-area" data-img="">
+                                                <img id="FromImeagPrv" alt="profile" class="profile-picture" src="data:image/*;base64,@(Convert.ToBase64String(Model.ImageUrl))" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <img id="FromImeagPrv" alt="profile" class="profile-picture" src="~/images/avatar-male.jpg" style="width:100%;height:300px;" />
+                                        }
+                                        <div class="scene">
+                                            <input asp-for="ImageUrl" type="file" name="file" class="custom-file-label" id="file-input" accept="image/*"
+                                                   onchange="document.getElementById('FromImeagPrv').src=window.URL.createObjectURL(this.files[0])" />
+                                            <div class="invalid-feedback">
+                                                الصورة مطلوبة مطلوبة لمنتجك
+                                            </div>
+                                        </div>
+                                        <input asp-for="ImageUrl" type="hidden" accept="image/*" class="form-control" />
+                                        <input type="hidden" asp-for="SportAndEntertainmentId" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div>
+                                            <label asp-for="ImageProduct" class="control-label" style="color: white"></label>
+                                        </div>
+                                        @if (Model.ImageProduct != null)
+                                        {
+                                            <div class="img-area" data-img="">
+                                                <img id="FromImeagPrvImageProduct" alt="profile" class="profile-picture" src="data:image/*;base64,@(Convert.ToBase64String(Model.ImageProduct))" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <img id="FromImeagPrvImageProduct" alt="profile" class="profile-picture" src="~/images/avatar-male.jpg" style="width:100%;height:300px;" />
+                                        }
+                                        <div class="scene">
+                                            <input asp-for="ImageProduct" type="file" name="file" class="custom-file-label" id="file-input" accept="image/*"
+                                                   onchange="document.getElementById('FromImeagPrvImageProduct').src=window.URL.createObjectURL(this.files[0])" />
+                                            <div class="invalid-feedback">
+                                                الصورة مطلوبة مطلوبة لمنتجك
+                                            </div>
+                                        </div>
+                                        <input asp-for="ImageProduct" type="hidden" accept="image/*" class="form-control" />
+                                        <input type="hidden" asp-for="SportAndEntertainmentId" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div>
+                                            <label asp-for="PictureProduct" class="control-label" style="color: white"></label>
+                                        </div>
+                                        @if (Model.PictureProduct != null)
+                                        {
+                                            <div class="img-area" data-img="">
+                                                <img id="FromImeagPrvPictureProduct" alt="profile" class="profile-picture" src="data:image/*;base64,@(Convert.ToBase64String(Model.PictureProduct))" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <img id="FromImeagPrvPictureProduct" alt="profile" class="profile-picture" src="~/images/avatar-male.jpg" style="width:100%;height:300px;" />
+                                        }
+                                        <div class="scene">
+                                            <input asp-for="PictureProduct" type="file" name="file" class="custom-file-label" id="file-input" accept="image/*"
+                                                   onchange="document.getElementById('FromImeagPrvPictureProduct').src=window.URL.createObjectURL(this.files[0])" />
+                                            <div class="invalid-feedback">
+                                                الصورة مطلوبة مطلوبة لمنتجك
+                                            </div>
+                                        </div>
+                                        <input asp-for="PictureProduct" type="hidden" accept="image/*" class="form-control" />
+                                        <input type="hidden" asp-for="SportAndEntertainmentId" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12" style="margin-top:40px">
+                                    <div class="form-floating">
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control",@id="message",@style="height: 300px;",@placeholder="تفاصيل المنتج"})
+                                        <label asp-for="Description">تفاصيل المنتج</label>
+                                        <div class="invalid-feedback">
+                                            تفاصيل المنتج مطلوب لمنتجك
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input hidden="hidden" asp-for="PhoneCompany" type="text" name="PhoneCompany" id="PhoneCompany" class="form-control" placeholder="PhoneCompany" requied="">
+                                    <label hidden="hidden" asp-for="PhoneCompany">هاتف المؤسسة</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input hidden="hidden" asp-for="NameCompany" type="text" name="NameCompany" id="NameCompany" class="form-control" placeholder="NameCompany" requied="">
+                                    <label hidden="hidden" asp-for="NameCompany"> اسم الشركة المصنعة</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input asp-for="DateOfEstablishment" hidden="hidden" type="text" name="DateOfEstablishment" id="DateOfEstablishment" class="form-control" placeholder="DateOfEstablishment" requied="" type="date">
+                                    <label hidden="hidden" asp-for="DateOfEstablishment"> تاريخ التاسيس</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input hidden="hidden" asp-for="WebSite" type="text" name="WebSite" id="WebSite" class="form-control" placeholder="WebSite" requied="">
+                                    <label hidden="hidden" asp-for="WebSite">الموقع الالكتروني</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input hidden="hidden" asp-for="FounderAddress" type="text" name="FounderAddress" id="FounderAddress" class="form-control" placeholder="FounderAddress" requied="">
+                                    <label hidden="hidden" asp-for="FounderAddress"> عنوان المؤسسة</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input hidden="hidden" asp-for="EmailCompany" type="text" name="EmailCompany" id="EmailCompany" class="form-control" placeholder="EmailCompany" requied="">
+                                    <label hidden="hidden" asp-for="EmailCompany"> تفاصيل الشركة</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input hidden="hidden" asp-for="DescriptionCompany" type="text" name="DescriptionCompany" id="DescriptionCompany" class="form-control" placeholder="DescriptionCompany" requied="">
+                                    <label hidden="hidden" asp-for="DescriptionCompany"> تفاصيل الشركة</label>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px;">
+                                        <input type="submit" value="تعديل" class="btn btn-outline-success fa fa-save col-12" style="padding:10px;border-radius: var(--border-radius-large)" />
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                                        <a asp-action="Index" class="btn btn-outline-info fa fa-rotate-back col-12" style="padding:10px;border-radius: var(--border-radius-large)">الرجوع للخلف</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+    }
+

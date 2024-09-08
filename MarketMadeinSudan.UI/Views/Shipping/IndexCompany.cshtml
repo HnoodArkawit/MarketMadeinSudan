@@ -1,0 +1,458 @@
+﻿@model IEnumerable<MarketMadeinSudan.Domin.Shipping>
+@inject MarketMadeinSudan.Application.Contracts.IAsyncRepository<MarketMadeinSudan.Domin.Shipping> Shipping
+
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "المؤسسة";
+    var UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+}
+<link rel="stylesheet" href="~/css/hover.css">
+
+<style type="text/css">
+    main.table {
+        height: 90vh;
+        background-color: #fff5;
+        backdrop-filter: blur(7px);
+        box-shadow: 0 .4rem .8rem #0005;
+        border-radius: .8rem;
+        overflow: hidden;
+    }
+
+    .table__header {
+        width: 100%;
+        height: 10%;
+        background-color: #fff4;
+        padding: .8rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .table__header .input-group {
+            width: 35%;
+            height: 100%;
+            background-color: #fff5;
+            padding: 0 .8rem;
+            border-radius: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: .2s;
+        }
+
+            .table__header .input-group:hover {
+                width: 45%;
+                background-color: #fff8;
+                box-shadow: 0 .1rem .4rem #0002;
+            }
+
+            .table__header .input-group img {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+
+            .table__header .input-group input {
+                width: 100%;
+                padding: 0 .5rem 0 .3rem;
+                background-color: transparent;
+                border: none;
+                outline: none;
+            }
+
+    .table__body {
+        width: 95%;
+        max-height: calc(89% - 1.6rem);
+        background-color: #fffb;
+        margin: .8rem auto;
+        border-radius: .6rem;
+        overflow: auto;
+        overflow: overlay;
+    }
+
+        .table__body::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        .table__body::-webkit-scrollbar-thumb {
+            border-radius: .5rem;
+            background-color: #0004;
+            visibility: hidden;
+        }
+
+        .table__body:hover::-webkit-scrollbar-thumb {
+            visibility: visible;
+        }
+
+    table {
+        width: 100%;
+    }
+
+    td img {
+        width: 36px;
+        height: 36px;
+        margin-right: .5rem;
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+
+    table, th, td {
+        border-collapse: collapse;
+        padding: 1rem;
+        text-align: left;
+    }
+
+    thead th {
+        position: sticky;
+        top: 0;
+        left: 0;
+        background-color: #d5d1defe;
+        cursor: pointer;
+        text-transform: capitalize;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #0000000b;
+    }
+
+    tbody tr {
+        --delay: .1s;
+        transition: .5s ease-in-out var(--delay), background-color 0s;
+    }
+
+        tbody tr.hide {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        tbody tr:hover {
+            background-color: #fff6 !important;
+        }
+
+        tbody tr td,
+        tbody tr td p,
+        tbody tr td img {
+            transition: .2s ease-in-out;
+        }
+
+        tbody tr.hide td,
+        tbody tr.hide td p {
+            padding: 0;
+            font: 0 / 0 sans-serif;
+            transition: .2s ease-in-out .5s;
+        }
+
+            tbody tr.hide td img {
+                width: 0;
+                height: 0;
+                transition: .2s ease-in-out .5s;
+            }
+
+    .status {
+        padding: .4rem 0;
+        border-radius: 2rem;
+        text-align: center;
+    }
+
+        .status.delivered {
+            background-color: #86e49d;
+            color: #006b21;
+        }
+
+        .status.cancelled {
+            background-color: #d893a3;
+            color: #b30021;
+        }
+
+        .status.pending {
+            background-color: #ebc474;
+        }
+
+        .status.shipped {
+            background-color: #6fcaea;
+        }
+
+    thead th span.icon-arrow {
+        display: inline-block;
+        width: 1.3rem;
+        height: 1.3rem;
+        border-radius: 50%;
+        border: 1.4px solid transparent;
+        text-align: center;
+        font-size: 1rem;
+        margin-left: .5rem;
+        transition: .2s ease-in-out;
+    }
+
+    thead th:hover span.icon-arrow {
+        border: 1.4px solid #6c00bd;
+    }
+
+    thead th:hover {
+        color: #6c00bd;
+    }
+
+    thead th.active span.icon-arrow {
+        background-color: #6c00bd;
+        color: #fff;
+    }
+
+    thead th.asc span.icon-arrow {
+        transform: rotate(180deg);
+    }
+
+    thead th.active, tbody td.active {
+        color: #6c00bd;
+    }
+    /*ألازرار*/
+    .card {
+        background-color: #e4e4e4;
+        border-radius: 15px;
+        box-shadow: 10px 10px 20px #c4c4c4, -10px -10px 20px #ffffff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px;
+    }
+
+    .button {
+        background-color: #e4e4e4;
+        border: none;
+        border-radius: 10px;
+        box-shadow: inset 5px 5px 5px #c4c4c4, inset -5px -5px 5px #ffffff;
+        color: #333;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .btn-search {
+        background-color: #e4e4e4;
+        border: none;
+        border-radius: 10px;
+        box-shadow: inset 5px 5px 5px #c4c4c4, inset -5px -5px 5px #ffffff;
+        color: #333;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 13px;
+        font-weight: bold;
+        margin: 3px;
+        padding: 10px;
+        text-transform: uppercase;
+    }
+
+    .button:hover {
+        box-shadow: none;
+    }
+
+
+    .card .Explore {
+        color: #3035cb;
+    }
+
+        .card .Explore:hover {
+            background-color: #3035cb;
+            color: #e4e4e4;
+        }
+
+        .card .Explore svg {
+            fill: #3035cb;
+        }
+
+        .card .Explore:hover svg {
+            fill: #e4e4e4;
+        }
+
+    .card .Post {
+        color: #333;
+    }
+
+        .card .Post:hover {
+            background-color: #333;
+            color: #e4e4e4;
+        }
+
+        .card .Post svg {
+            fill: #333;
+        }
+
+        .card .Post:hover svg {
+            fill: #e4e4e4;
+        }
+
+    .card .Chat {
+        color: #fff;
+    }
+
+        .card .Chat:hover {
+            background-color: #fff;
+            color: #e4e4e4;
+        }
+
+        .card .Chat svg {
+            fill: #fff;
+        }
+
+        .card .Chat:hover svg {
+            fill: #e4e4e4;
+        }
+
+</style>
+
+<div class="container" style="padding:150px 40px 150px 40px;direction: rtl;">
+
+    <div class="container-fluid btn-group">
+        <div class="col-10">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <form asp-action="IndexCompany" method="get">
+            <div style="display:inline-flex">
+                <input name="Search" type="search" class="form-control" id="Search" placeholder="بحث باسم العميل" aria-label="Search" style="border-radius: 0px 10px 10px 0px;">
+                <button type="submit" class="btn-search Chat" id="submit" style="width: 72px;height:100%;border-radius: 10px 0px 0 10px;">
+                    <i class="bi-search" style="font-size: 30px;color:darkcyan;"></i>
+                </button>
+            </div>
+        </form>
+        <div style="display:inline-flex">
+            <button class="button Post" style="width: 60px;height:100%;" onclick='printDiv();'>
+                <i class="bi bi-printer" style="font-size: 30px;color:darkcyan;"></i>
+            </button>
+        </div>
+        <form asp-action="IndexCompany" method="get">
+            <div style="display:inline-flex">
+                <select name="Search" id="Search">
+                    <option>InProcess</option>
+                    <option>Completed</option>
+                    <option>Canceled</option>
+                </select>
+                <button type="submit" class="btn-search Chat" id="submit" style="width: 60px;height:100%;">
+                    <i class="bi-search" style="font-size: 30px;color:darkcyan;"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <br />
+    <br />
+    <div id='DivIdToPrint'>
+        <main class="table">
+            <section class="table__body">
+                <table id="myTable" class="table table-striped table-hover" style="width:100%;padding:0px;border: chocolate;">
+                    <thead style="background: darkcyan;">
+                        <tr>
+                            <th>
+                                اسم شركة الشحن
+                            </th>
+                            <th>
+                                البريد الاركتروني لشركة الشحن
+                            </th>
+                            <th>
+                                عنوان شركة الشحن
+                            </th>
+                            <th>
+                                هاتف شركة الشحن
+                            </th>
+                            <th>
+                                اسم العميل
+                            </th>
+                            <th>
+                                بلد العميل
+                            </th>
+                            <th>
+                                عنوان العميل
+                            </th>
+                            <th>
+                                البريد الاركتروني للعميل
+                            </th>
+                            <th>
+                                هاتف العميل
+                            </th>
+                            <th>
+                                اسم المنتج
+                            </th>
+                            <th>
+                                الكمية
+                            </th>
+                            <th>
+                                اسم الشركة المصدرة
+                            </th>
+                            <th>
+                                عنوان الشركة المصدرة
+                            </th>
+                            <th>
+                                البريد الاركتروني للشركة المصدرة
+                            </th>
+                            <th>
+                                هاتف الشركةالمصدرة
+                            </th>
+                            <th>
+                                حالة الشحنة
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.NameCompany</td>
+                                <td>@item.AddressShipping</td>
+                                <td>@item.EmailShipping</td>
+                                <td>@item.PhoneShipping</td>
+                                <td> @Html.DisplayFor(modelItem => item.firstNameCustoer) </td>
+                                <td> @Html.DisplayFor(modelItem => item.CountryCustoer) </td>
+                                <td> @Html.DisplayFor(modelItem => item.AddressCustoer) </td>
+                                <td> @item.EmailCustoer</td>
+                                <td> @Html.DisplayFor(modelItem => item.PhoneCustomer)</td>
+                                <td> @Html.DisplayFor(modelItem => item.ProductName) </td>
+                                <td> @Html.DisplayFor(modelItem => item.Count) </td>
+                                <td> @Html.DisplayFor(modelItem => item.NameCompany) </td>
+                                <td> @Html.DisplayFor(modelItem => item.AddressCompany) </td>
+                                <td> @Html.DisplayFor(modelItem => item.EmailCompany)</td>
+                                <td> @Html.DisplayFor(modelItem => item.PhoneCompany) </td>
+                                <td> @Html.DisplayFor(modelItem => item.Status) </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <br />
+    <br />
+
+    <a asp-action="Index" class="btn btn-outline-info fa fa-rotate-back col-lg-12">الرجوع للخلف</a>
+
+</div>
+<script type="text/javascript">
+    function printDiv() {
+
+        var divToPrint = document.getElementById('DivIdToPrint');
+
+        var newWin = window.open('', 'Print-Window');
+
+        newWin.document.open();
+
+        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+        newWin.document.close();
+
+        setTimeout(function () { newWin.close(); }, 10);
+
+    }
+</script>

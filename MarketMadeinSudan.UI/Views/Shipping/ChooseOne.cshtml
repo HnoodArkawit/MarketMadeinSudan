@@ -1,0 +1,581 @@
+﻿@model ShippingPublishersViewModel
+
+@{
+    ViewData["Title"] = "ChooseOne";
+}
+<style>
+    main.table {
+        background-color: #fff5;
+        backdrop-filter: blur(7px);
+        box-shadow: 0 .4rem .8rem #0005;
+        border-radius: .8rem;
+        overflow: hidden;
+        height: 500px;
+    }
+
+    .table__header {
+        width: 100%;
+        height: 10%;
+        background-color: #fff4;
+        padding: .8rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .table__header .input-group {
+            width: 35%;
+            height: 100%;
+            background-color: #fff5;
+            padding: 0 .8rem;
+            border-radius: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: .2s;
+        }
+
+            .table__header .input-group:hover {
+                width: 45%;
+                background-color: #fff8;
+                box-shadow: 0 .1rem .4rem #0002;
+            }
+
+            .table__header .input-group img {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+
+            .table__header .input-group input {
+                width: 100%;
+                padding: 0 .5rem 0 .3rem;
+                background-color: transparent;
+                border: none;
+                outline: none;
+            }
+
+    .table__body {
+        width: 95%;
+        max-height: calc(89% - 1.6rem);
+        background-color: #fffb;
+        margin: .8rem auto;
+        border-radius: .6rem;
+        overflow: auto;
+        overflow: overlay;
+    }
+
+        .table__body::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        .table__body::-webkit-scrollbar-thumb {
+            border-radius: .5rem;
+            background-color: #0004;
+            visibility: hidden;
+        }
+
+        .table__body:hover::-webkit-scrollbar-thumb {
+            visibility: visible;
+        }
+
+    table {
+        width: 100%;
+    }
+
+    td img {
+        width: 36px;
+        height: 36px;
+        margin-right: .5rem;
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+
+    table, th, td {
+        border-collapse: collapse;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    thead th {
+        position: sticky;
+        top: 0;
+        left: 0;
+        background-color: #d5d1defe;
+        cursor: pointer;
+        text-transform: capitalize;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #0000000b;
+    }
+
+    tbody tr {
+        --delay: .1s;
+        transition: .5s ease-in-out var(--delay), background-color 0s;
+    }
+
+        tbody tr.hide {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        tbody tr:hover {
+            background-color: #fff6 !important;
+        }
+
+        tbody tr td,
+        tbody tr td p,
+        tbody tr td img {
+            transition: .2s ease-in-out;
+        }
+
+        tbody tr.hide td,
+        tbody tr.hide td p {
+            padding: 0;
+            font: 0 / 0 sans-serif;
+            transition: .2s ease-in-out .5s;
+        }
+
+            tbody tr.hide td img {
+                width: 0;
+                height: 0;
+                transition: .2s ease-in-out .5s;
+            }
+
+    .status {
+        padding: .4rem 0;
+        border-radius: 2rem;
+        text-align: center;
+    }
+
+        .status.delivered {
+            background-color: #86e49d;
+            color: #006b21;
+        }
+
+        .status.cancelled {
+            background-color: #d893a3;
+            color: #b30021;
+        }
+
+        .status.pending {
+            background-color: #ebc474;
+        }
+
+        .status.shipped {
+            background-color: #6fcaea;
+        }
+
+    thead th span.icon-arrow {
+        display: inline-block;
+        width: 1.3rem;
+        height: 1.3rem;
+        border-radius: 50%;
+        border: 1.4px solid transparent;
+        text-align: center;
+        font-size: 1rem;
+        margin-left: .5rem;
+        transition: .2s ease-in-out;
+    }
+
+    thead th:hover span.icon-arrow {
+        border: 1.4px solid #6c00bd;
+    }
+
+    thead th:hover {
+        color: #6c00bd;
+    }
+
+    thead th.active span.icon-arrow {
+        background-color: #6c00bd;
+        color: #fff;
+    }
+
+    thead th.asc span.icon-arrow {
+        transform: rotate(180deg);
+    }
+
+    thead th.active, tbody td.active {
+        color: #6c00bd;
+    }
+
+    /*النقل*/
+    #deleteItim {
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        border: none;
+        position: relative;
+        border-radius: 10px;
+        -webkit-box-shadow: 1px 1px 5px .2px #00000035;
+        box-shadow: 1px 1px 5px .2px #00000035;
+        -webkit-transition: .2s linear;
+        transition: .2s linear;
+        transition-delay: .2s;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: space-between;
+    }
+
+        #deleteItim:hover {
+            width: 150px;
+            transition-delay: .2s;
+        }
+
+            #deleteItim:hover > .paragraph {
+                visibility: visible;
+                opacity: 1;
+                -webkit-transition-delay: .4s;
+                transition-delay: .4s;
+            }
+
+            #deleteItim:hover > .icon-wrapper .icon {
+                transform: scale(1.1);
+            }
+
+                #deleteItim:hover > .icon-wrapper .icon path {
+                    stroke: black;
+                }
+
+    .paragraph {
+        color: black;
+        visibility: hidden;
+        opacity: 0;
+        font-size: 18px;
+        margin-right: 50px;
+        -webkit-transition: .2s linear;
+        transition: .2s linear;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .icon-wrapper {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon {
+        transform: scale(.9);
+        transition: .2s linear;
+    }
+
+        .icon path {
+            stroke: #000;
+            stroke-width: 2px;
+            -webkit-transition: .2s linear;
+            transition: .2s linear;
+        }
+
+</style>
+<div class="container">
+    <main id="table" class="table" @* style="display:none;"*@>
+        <section class="table__body">
+            <table id="myTable" class="table table-striped table-hover" style="width:100%;padding:0px;border: chocolate;">
+                <thead style="background: darkcyan;">
+                    <tr>
+                        <th>
+                            اسم شركة الشحن
+                        </th>
+                        <th>
+                            البريد الاركتروني لشركة الشحن
+                        </th>
+                        <th>
+                            عنوان شركة الشحن
+                        </th>
+                        <th>
+                            هاتف شركة الشحن
+                        </th>
+                        <th>
+                            نبذه عن شركة الشحن
+                        </th>
+                        <th>
+                            اجراء
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Publishers)
+                    {
+                        <tr>
+                            <td>@item.NameCompany</td>
+                            <td>@item.FounderAddress</td>
+                            <td>@item.Email</td>
+                            <td>@item.Phone</td>
+                            <td>@item.DescriptionCompany</td>
+                            <td style="display:none;">@item.PublishersId</td>
+                            <td>
+                                <a id="deleteItim" onclick="copyData(this)">
+                                    <p class="paragraph" style="margin-top: 20px;">ترشيح</p>
+                                    <span class="icon-wrapper">
+                                        <i class="bi bi-info-circle"></i>
+                                    </span>
+                                </a>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <br /><br>
+    <main id="table" class="table">
+        <section class="table__body">
+            <table id="myTable" class="table table-striped table-hover" style="width:100%;padding:0px;border: chocolate;">
+                <thead style="background: darkcyan;">
+                    <tr>
+                        <th>
+                            اسم العميل
+                        </th>
+                        <th>
+                            بلد العميل
+                        </th>
+                        <th>
+                            عنوان العميل
+                        </th>
+                        <th>
+                            البريد الاركتروني للعميل
+                        </th>
+                        <th>
+                            هاتف العميل
+                        </th>
+                        <th>
+                            اسم المنتج
+                        </th>
+                        <th>
+                            الكمية
+                        </th>
+                        <th>
+                            اسم الشركة المصدرة
+                        </th>
+                        <th>
+                            عنوان الشركة المصدرة
+                        </th>
+                        <th>
+                            البريد الاركتروني للشركة المصدرة
+                        </th>
+                        <th>
+                            هاتف الشركةالمصدرة
+                        </th>
+                        <th>
+                            الإاجراء
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderDetails)
+                    {
+
+                        <tr>
+                            <td> @Html.DisplayFor(modelItem => item.firstName) </td>
+                            <td> @Html.DisplayFor(modelItem => item.Country) </td>
+                            <td> @Html.DisplayFor(modelItem => item.Address) </td>
+                            <td> @item.Email</td>
+                            <td> @Html.DisplayFor(modelItem => item.Phone)</td>
+                            <td> @Html.DisplayFor(modelItem => item.ProductName) </td>
+                            <td> @Html.DisplayFor(modelItem => item.Count) </td>
+                            <td> @Html.DisplayFor(modelItem => item.NameCompany) </td>
+                            <td> @item.AddressCompany </td>
+                            <td> @Html.DisplayFor(modelItem => item.EmailCompany)</td>
+                            <td> @Html.DisplayFor(modelItem => item.PhoneCompany) </td>
+                            <td>
+                                <a id="deleteItim" onclick="copyDataOrderDetails(this)">
+                                    <p class="paragraph" style="margin-top: 20px;">ترشيح</p>
+                                    <span class="icon-wrapper">
+                                        <i class="bi bi-info-circle"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+<br />
+<br />
+
+<form method="post" class="needs-validation custom-form contact-form" role="form" asp-action="Create" novalidate>
+    <div class="mb-3">
+        <input type="hidden" name="Status" class="form-control" id="Status" value="InProcess">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="NameShipping">اسم شركة الشحن</label>
+                <div class="form-floating">
+                    <input type="text" name="NameShipping" id="NameShipping" class="form-control" placeholder="NameShipping" requied="" readonly style="text-align:center">
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="AddressShipping">عنوان شركة الشحن</label>
+                <div class="form-floating">
+                    <input type="text" name="AddressShipping" id="AddressShipping" class="form-control" placeholder="AddressShipping" requied="" readonly style="text-align:center">
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="EmailShipping">البريد الاركتروني شركة الشحن</label>
+                <div class="form-floating">
+                    <input type="text" name="EmailShipping" id="EmailShipping" class="form-control" placeholder="EmailShipping" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="PhoneShipping">هاتف شركة الشحن</label>
+                <div class="form-floating">
+                    <input type="text" name="PhoneShipping" id="PhoneShipping" class="form-control" placeholder="PhoneShipping" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="DescriptionShipping">نبذه عن شركة الشحن</label>
+                <div class="form-floating">
+                    <input type="text" name="DescriptionShipping" id="DescriptionShipping" class="form-control" placeholder="DescriptionShipping" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="NameCustoer">اسم العميل</label>
+                <div class="form-floating">
+                    <input type="text" name="firstNameCustoer" id="firstNameCustoer" class="form-control" placeholder="NameCustoer" requied="" style="text-align:center" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" style="margin-top:20px">
+            <label class="label" for="AddressCustoer">عنوان العميل</label>
+            <div class="form-floating">
+                <input type="text" name="AddressCustoer" id="AddressCustoer" class="form-control" placeholder="AddressCustoer" style="text-align:center" requied="" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="CountryCustoer">بلد العميل</label>
+                <div class="form-floating">
+                    <input type="text" name="CountryCustoer" id="CountryCustoer" class="form-control" placeholder="CountryCustoer" requied="" style="text-align:center" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="EmailCustoer">البريد الاركتروني للعميل</label>
+                <div class="form-floating">
+                    <input type="text" name="EmailCustoer" id="EmailCustoer" class="form-control" placeholder="EmailCustoer" requied="" style="text-align:center" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="PhoneCustomer">هاتف العميل</label>
+                <div class="form-floating">
+                    <input type="text" name="PhoneCustomer" id="PhoneCustomer" class="form-control" placeholder="PhoneCustomer" requied="" style="text-align:center" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="Productasp-for">اسم المنتج</label>
+                <div class="form-floating">
+                    <input type="text" name="ProductName" id="ProductName" class="form-control" placeholder="ProductName" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="Count">كمية المنتج</label>
+                <div class="form-floating">
+                    <input type="text" name="Count" id="Count" class="form-control" placeholder="Count" requied="" style="text-align:center" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="NameCompany">اسم الشركة المصنعة</label>
+                <div class="form-floating">
+                    <input type="text" name="NameCompany" id="NameCompany" class="form-control" placeholder="NameCompany" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="AddressCompany">عنوان الشركة المصنعة</label>
+                <div class="form-floating">
+                    <input type="text" name="AddressCompany" id="AddressCompany" class="form-control" placeholder="AddressCompany" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="EmailCompany">البريد الاركتروني للشركة المصنعة</label>
+                <div class="form-floating">
+                    <input type="text" name="EmailCompany" id="EmailCompany" class="form-control" placeholder="EmailCompany" requied="" style="text-align:center" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <label class="label" for="PhoneCompany">هاتف الشركة المصنعه</label>
+                <div class="form-floating">
+                    <input type="text" name="PhoneCompany" id="PhoneCompany" class="form-control" placeholder="PhoneCompany" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:20px">
+                <div class="form-floating">
+                    <input hidden="hidden" type="text" name="PublishersId" id="PublishersId" class="form-control" placeholder="PublishersId" style="text-align:center" requied="" readonly>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                <input type="submit" value="تاكيد" class="btn btn-outline-success fa fa-save col-12" style="padding:10px;border-radius: var(--border-radius-large)" />
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                <a asp-action="Index" class="btn btn-outline-info fa fa-rotate-back col-12" style="padding:10px;border-radius: var(--border-radius-large);">الرجوع للخلف</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+    <script type="text/javascript">
+        function copyData(button) {
+            var row = button.parentNode.parentNode;
+            var cells = row.getElementsByTagName("td");
+        document.getElementById("NameShipping").value = cells[0].innerHTML;
+        document.getElementById("AddressShipping").value = cells[1].innerHTML;
+        document.getElementById("EmailShipping").value = cells[2].innerHTML;
+        document.getElementById("PhoneShipping").value = cells[3].innerHTML;
+        document.getElementById("DescriptionShipping").value = cells[4].innerHTML;
+        document.getElementById("PublishersId").value = cells[5].innerHTML;
+
+        }
+    </script>
+
+<script type="text/javascript">
+        function copyDataOrderDetails(button) {
+            var row = button.parentNode.parentNode;
+            var cells = row.getElementsByTagName("td");
+        document.getElementById("firstNameCustoer").value = cells[0].innerHTML;
+        document.getElementById("CountryCustoer").value = cells[1].innerHTML;
+        document.getElementById("AddressCustoer").value = cells[2].innerHTML;
+        document.getElementById("EmailCustoer").value = cells[3].innerHTML;
+        document.getElementById("PhoneCustomer").value = cells[4].innerHTML;
+            document.getElementById("ProductName").value = cells[5].innerHTML;
+            document.getElementById("Count").value = cells[6].innerHTML;
+            document.getElementById("NameCompany").value = cells[7].innerHTML;
+            document.getElementById("AddressCompany").value = cells[8].innerHTML;
+            document.getElementById("EmailCompany").value = cells[9].innerHTML;
+            document.getElementById("PhoneCompany").value = cells[10].innerHTML;
+        }
+    </script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>

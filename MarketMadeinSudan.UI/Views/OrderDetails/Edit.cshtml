@@ -1,0 +1,214 @@
+﻿@model MarketMadeinSudan.Application.Features.FolderOrderDetails.Commands.UpdateOrderDetails.UpdateOrderDetailsCommand
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: 0;
+        box-shadow: none;
+        border: 1px solid #ced4da;
+        background: white;
+        background-image: none;
+        flex: 1;
+        padding: 0 .5em;
+        color: #000;
+        cursor: pointer;
+        font-size: 1em;
+        text-align: center;
+    }
+
+        select::-ms-expand {
+            display: none;
+        }
+
+    .select {
+        position: relative;
+        display: flex;
+        height: 44px;
+        line-height: 3;
+        background: #5c6664;
+        overflow: hidden;
+        border-radius: .25em;
+    }
+
+        .select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 1em;
+            background: #b2baba;
+            cursor: pointer;
+            pointer-events: none;
+            transition: .25s all ease;
+        }
+
+        .select:hover::after {
+            color: #23b499;
+        }
+
+</style>
+<section class="contact-section section-padding pt-0">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8 col-12 mx-auto">
+                <div class="section-title-wrap mb-5">
+                    <h4 class="section-title">تعديل منتج</h4>
+                </div>
+
+                <form method="post" class="custom-form contact-form" role="form" asp-action="Edit">
+                    <div class="row">
+                        <input type="hidden" asp-for="UserId" class="form-control" />
+                        <input type="hidden" asp-for="OrderDetailsId" class="form-control" />
+                        <input hidden="hidden" asp-for="PublishersId" id="PublishersId">
+
+                        <input type="hidden" asp-for="AddressCompany" class="form-control" id="AddressCompany" value="InProcess">
+                        <input type="hidden" asp-for="PhoneCompany" class="form-control" id="PhoneCompany">
+
+                        <div class="container">
+                            <div class="row">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input asp-for="firstName" type="hidden" id="firstName" class="form-control" placeholder="firstName" requied="">
+                                                    <label hidden="hidden" asp-for="firstName"> الاسم الاول</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input asp-for="lastName" type="hidden" id="lastName" class="form-control" placeholder="lastName" requied="">
+                                                    <label hidden="hidden" asp-for="lastName">العائلي</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12 col-md-12 col-12">
+                                                <div class="form-floating">
+                                                    <input asp-for="UserName" type="hidden" id="UserName" class="form-control" placeholder="UserName" requied="">
+                                                    <label hidden="hidden" asp-for="UserName">اسم المستخدم</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input type="hidden" asp-for="Email" id="Email" class="form-control" placeholder="Email" requied="">
+                                                    <label hidden="hidden" asp-for="Email"> الايميل</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input asp-for="Address" type="hidden" id="Address" class="form-control" placeholder="Address" requied="">
+                                                    <label hidden="hidden" asp-for="Address">العنوان</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-12">
+                                                <div class="form-floating">
+                                                    <input asp-for="Country" type="hidden" id="Country" class="form-control" placeholder="Country" requied="">
+                                                    <label hidden="hidden" asp-for="Country">البلد</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input asp-for="Zip" type="hidden" id="Zip" class="form-control" placeholder="Zip" requied="">
+                                                    <label hidden="hidden" asp-for="Zip"> ترميز البلد</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-12">
+                                                <div class="form-floating">
+                                                    <input hidden="hidden" asp-for="ProductName" type="text" id="ProductName" class="form-control" placeholder="ProductName" requied="">
+                                                    <label hidden="hidden" asp-for="ProductName">رقم الناشر</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input hidden="hidden" asp-for="Price" type="text" id="Price" class="form-control" placeholder="Price" requied="">
+                                                    <label hidden="hidden" asp-for="Price"> السعر</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input hidden="hidden" asp-for="Count" type="text" id="Count" class="form-control" placeholder="Count" requied="">
+                                                    <label hidden="hidden" asp-for="Count">الكمية</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-12">
+                                                <div class="form-floating">
+                                                    <input hidden="hidden" asp-for="Total" type="text" id="Total" class="form-control" placeholder="Total" requied="">
+                                                    <label hidden="hidden" asp-for="Total">المجموع المستخق</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input type="hidden" asp-for="EmailCompany" id="EmailCompany" class="form-control" placeholder="EmailCompany" requied="">
+                                                    <label hidden="hidden" asp-for="EmailCompany"> بريد الشركة</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-12">
+                                                <div class="select" style="margin-bottom: 20px;">
+                                                    <label for="Status" style="width: 55px;text-align: center;">الحاله</label>
+                                                    <select asp-for="Status" class="custom-select d-block w-100" id="Status" required="">
+                                                        <option>InProcess</option>
+                                                        <option>Completed</option>
+                                                        <option>Rehected</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input type="hidden" asp-for="NameCompany" id="NameCompany" class="form-control" placeholder="NameCompany" requied="">
+                                                    <label hidden="hidden" asp-for="NameCompany"> اسم الشركة</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input type="hidden" asp-for="MeasruingUnit" id="MeasruingUnit" class="form-control" placeholder="MeasruingUnit" requied="">
+                                                    <label hidden="hidden" asp-for="MeasruingUnit"> اسم الشركة</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input hidden="hidden" asp-for="Phone" id="Phone" class="form-control" data-mask="0000000000" placeholder="0000000000" placeholder="Phone" requied="">
+                                                    <label hidden="hidden" asp-for="Phone">رقم الهاتف</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="form-floating">
+                                                    <input type="hidden" asp-for="DatePay" id="DatePay" class="form-control" placeholder="DatePay" requied="">
+                                                    <label hidden="hidden" asp-for="DatePay">تاريخ الشراء</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                                    <input type="submit" value="تعديل" class="btn btn-outline-success fa fa-save col-12" style="padding:10px" />
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6" style="padding:10px">
+                                    <a asp-action="Index" class="btn btn-outline-info fa fa-rotate-back col-12" style="padding:10px">الرجوع للخلف</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+

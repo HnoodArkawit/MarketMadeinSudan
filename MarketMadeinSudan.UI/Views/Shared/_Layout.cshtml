@@ -1,0 +1,1290 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="كنداكة السودان التجارية, initial-scale=1.0">
+    <meta name="description" content="نافذة تربط التجارة السودانية بالعالم">
+    <title>كنداكة السودان </title>
+
+    <!--
+      - favicon
+    -->
+    <link rel="shortcut icon" href="~/assets/images/logo.png" type="image/x-icon">
+
+    <!--
+      - custom css link
+    -->
+    <link rel="stylesheet" href="~/assets/css/style-prefix.css">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <!--
+      - google font link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Sono:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/css/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+
+    <link href="~/css/templatemo-pod-talk.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <style>
+        /*ازرار التحويل*/
+        .cssbuttons-io-button {
+            background: #0000FF;
+            color: white;
+            font-family: inherit;
+            padding: 0.35em;
+            padding-left: 1.2em;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 0.9em;
+            border: none;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            box-shadow: inset 0 0 1.6em -0.6em #0000FF;
+            overflow: hidden;
+            position: relative;
+            height: 2.8em;
+            padding-right: 3.3em;
+        }
+
+            .cssbuttons-io-button .icon {
+                background: white;
+                margin-left: 1em;
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 2.2em;
+                width: 2.2em;
+                border-radius: 0.7em;
+                box-shadow: 0.1em 0.1em 0.6em 0.2em #0000FF;
+                right: 0.3em;
+                transition: all 0.3s;
+            }
+
+            .cssbuttons-io-button:hover .icon {
+                width: calc(100% - 0.6em);
+            }
+
+            .cssbuttons-io-button .icon svg {
+                width: 1.1em;
+                transition: transform 0.3s;
+                color: #0000FF;
+            }
+
+            .cssbuttons-io-button:hover .icon svg {
+                transform: translateX(0.1em);
+            }
+
+            .cssbuttons-io-button:active .icon {
+                transform: scale(0.95);
+            }
+
+        /*مفتاح النور*/
+        #onoff {
+            display: none
+        }
+
+        .on, .off {
+            position: absolute;
+            text-align: center;
+            text-shadow: inset 1px 1px 1px black;
+            width: 100%;
+        }
+
+        .on {
+            color: #fff;
+            top: 10px;
+            transition: all 0.1s;
+            font-family: sans-serif
+        }
+
+        .off {
+            color: #636161;
+            bottom: 5px;
+            transition: all 0.1s;
+            transform: scaleY(0.85);
+        }
+
+        .but {
+            background-color: #000;
+            border-radius: 400px 400px 400px 400px / 400px 400px 300px 300px;
+            border-bottom-width: 0px;
+            box-shadow: inset 8px 6px 5px -7px rgba(0,0,0,1),inset -8px 6px 5px -7px rgba(0,0,0,1),inset 0 -3px 2px -2px rgba(200,200,200,.5),0 3px 3px -2px rgba(0,0,0,1),inset 0 -230px 60px -200px rgba(255,255,255,.2),inset 0 220px 40px -200px rgba(0,0,0,.3);
+            display: block;
+            font-size: 17px;
+            height: 60px;
+            position: relative;
+            transition: all 0.2s;
+            width: 40px;
+        }
+
+        .back {
+            background-color: #000;
+            background-image: -webkit-linear-gradient(0deg, transparent 30%, transparent 65%),-webkit-linear-gradient(0deg, rgba(245, 245, 245, 0) 30%, rgba(150,150,150,.1) 50%, rgba(150,150,150,0) 70%);
+            border-radius: 115px;
+            box-sizing: border-box;
+            height: 85px;
+            padding: 4px 4px;
+            transition: all 0.2s;
+            width: 50px;
+        }
+
+        input:checked + .back .on, input:checked + .back .off {
+            text-shadow: inset 1px 1px 1px black;
+        }
+
+        input:checked + .back .on {
+            color: rgb(141, 141, 141);
+            top: 10px;
+            transform: scaleY(0.85);
+        }
+
+        input:checked + .back .off {
+            color: #fff;
+            bottom: 5px;
+            transform: scaleY(1);
+        }
+
+        input:checked + .back .but {
+            background: #232323;
+            background-image: -webkit-radial-gradient(55% 18%,circle closest-corner,rgba(0,0,0,.3),rgba(0,0,0,0));
+            border-radius: 410px 410px 410px 410px / 310px 310px 410px 410px;
+            box-shadow: inset 8px -4px 5px -7px rgba(0,0,0,1),inset -8px -4px 5px -7px rgba(0,0,0,1), 0 -3px 8px -4px rgba(250,250,250,.4),inset 0 3px 4px -2px rgba(10,10,10,1),inset 0 280px 40px -200px rgba(0,0,0,.2),inset 0 -200px 40px -200px rgba(180,180,180,.2);
+            margin-top: 20px;
+        }
+
+        input:checked + .back {
+            background-image: -webkit-linear-gradient(90deg, black 30%, transparent 65%),-webkit-linear-gradient(180deg, rgba(250,250,250,0) 0%, rgba(250,250,250,.4) 50%, rgba(150,150,150,0) 100%);
+            box-shadow: 28px 28px 28px -28px rgba(0,0,0,.1),-28px 28px 28px -22px rgba(0,0,0,.1),0 30px 30px 0px rgba(0,0,0,.2),inset 0 1px 2px 0 rgba(0,0,0,.6);
+            padding: 2px 4px;
+        }
+
+        .l, .r {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .round, #onoff, .back, .but, .on, .off {
+            user-select: none;
+        }
+        /*مفتاح النور*/
+
+        body {
+            background-color: white;
+            color: #5E605F;
+        }
+
+        .dark-mode {
+            background-color: #5E605F;
+            color: white;
+        }
+    </style>
+
+    <div class="overlay" data-overlay></div>
+
+    <!--
+      - NOTIFICATION TOAST
+    -->
+
+    <div class="notification-toast" data-toast>
+
+        <button class="toast-close-btn" data-toast-close>
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+
+        <div class="toast-banner">
+            <img src="~/assets/images/logo.png" alt="Rose Gold Earrings" width="80" height="70">
+        </div>
+
+        <div class="toast-detail">
+            <p class="toast-message">
+                تسوق ممتع
+            </p>
+
+            <p class="toast-title">
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity?.Name</a>
+            </p>
+
+            <p class="toast-meta">
+                <time datetime="PT2M">
+                    <span id="time"></span>
+                    <script>
+                        var d = new Date();
+                        document.getElementById("time").innerHTML = d.toLocaleTimeString();
+                    </script>
+                </time>
+            </p>
+
+        </div>
+
+    </div>
+
+    <!--
+      - HEADER
+    -->
+
+    <header>
+
+        <div class="header-main">
+
+            <div class="container">
+
+                <a href="#" class="header-logo">
+                    <img src="~/assets/images/logo.png" alt="logo" width="100" height="90">
+                </a>
+
+                <div class="header-user-actions">
+                    <label class="switch">
+                        <div class="round">
+                            <input name="onoff" id="onoff" type="checkbox" onclick="myFunction()">
+                            <div class="inputLite back"><label for="onoff" class="but"><span class="on">0</span><span class="off">I</span></label></div>
+                        </div>
+                    </label>
+
+                    <partial name="_LoginPartial" />
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <nav class="desktop-navigation-menu" style="background: #3586ff;">
+
+            <div class="container">
+
+                <ul class="desktop-menu-category-list">
+
+                    <li class="menu-category">
+                        <a href="~/Home/Index" class="menu-title">الصفحة الرئسية</a>
+                    </li>
+
+                    <li class="menu-category">
+                        <a href="#" class="menu-title">اقسام المنتجات</a>
+                        <div class="dropdown-panel">
+
+                            <ul class="dropdown-panel-list" style="padding-left: 1rem;">
+                                <li class="panel-list-item">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexAccessories", "Home")'" style="width: 250px;">
+                                        الاكستسوارات
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                                <li class="panel-list-item" style="margin-top: 20px;">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexAspires", "Home")'" style="width: 250px;">
+                                        الاسبيرات
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                                <li class="panel-list-item" style="margin-top: 20px;">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexAgriculturalCrops", "Home")'" style="width: 250px;">
+                                        المحاصيل الزراعية
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-panel-list" style="padding-left: 1rem;">
+                                <li class="panel-list-item">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexElectricalAndElctronic", "Home")'" style="width: 250px;">
+                                        الادوات الكهربائية والإلكترونية
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                                <li class="panel-list-item" style="margin-top: 20px;">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexHouseholdProducts", "Home")'" style="width: 250px;">
+                                        المنتجات المنزلي
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                                <li class="panel-list-item" style="margin-top: 20px;">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("indexother", "Home")'" style="width: 250px;">
+                                        منتجات اخري
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-panel-list" style="padding-left: 1rem;">
+                                <li class="panel-list-item">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexFabrics", "Home")'" style="width: 250px;">
+                                        الاقمشة
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                                <li class="panel-list-item" style="margin-top: 20px;">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexFood", "Home")'" style="width: 250px;">
+                                        المواد الغذائية
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-panel-list" style="padding-left: 1rem;">
+                                <li class="panel-list-item">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexWatchesAndJewelry", "Home")'" style="width: 250px;">
+                                        الساعات والمجوهرات
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                                <li class="panel-list-item" style="margin-top: 20px;">
+                                    <button class="cssbuttons-io-button" onclick="location.href='@Url.Action("IndexSportAndEntertainment", "Home")'" style="width: 250px;">
+                                        الرياضة والترفيه
+                                        <div class="icon">
+                                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
+                                        </div>
+                                    </button>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </li>
+
+                    <li class="menu-category">
+                        <a href="~/Email/Send" class="menu-title">تواصل معانا</a>
+                    </li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("User"))
+                        {
+
+                            <li class="menu-category">
+                                <a href="~/Publishers/index" class="menu-title">اضف مؤسسة</a>
+                            </li>
+
+                            <li class="menu-category">
+                                <a href="~/OrderDetails/IndexCustomer" class="menu-title">طلباتي</a>
+                            </li>
+
+                            <li class="menu-category">
+                                <a href="~/Cart/AllCart" class="menu-title">سلتي</a>
+                            </li>
+
+                        }
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li class="menu-category">
+                                <a href="~/Users/AdminPage" class="menu-title">لوحة التحكم</a>
+                            </li>
+                        }
+                        if (User.IsInRole("Accessories"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Accessories/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("AgriculturalCrops"))
+                        {
+
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/AgriculturalCrops/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("Aspires"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Aspires/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("ElectricalAndElctronic"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/ElectricalAndElctronic/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("Fabrics"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Fabrics/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("Food"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Food/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("HouseholdProducts"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/HouseholdProducts/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("Other"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Other/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("SportAndEntertainment"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/SportAndEntertainment/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("WatchesAndJewelry"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/WatchesAndJewelry/Index">المتجر</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Advertisements/Index">اعلاناتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/IndexCompany">شحناتي</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole("Shipping"))
+                        {
+                            <li class="menu-category">
+                                <a href="#" class="menu-title">لوحة التحكم</a>
+
+                                <ul class="dropdown-list">
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Shipping/Index">الطلبات</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/Cart/AllCart">سلتي</a>
+                                    </li>
+
+                                    <li class="dropdown-item">
+                                        <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a href="~/Publishers/Index">الإعدادات</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+
+                    }
+
+                </ul>
+            </div>
+
+        </nav>
+        <nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
+
+            <div class="menu-top">
+                <h2 class="menu-title">Menu</h2>
+
+                <button class="menu-close-btn" data-mobile-menu-close-btn>
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("User"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Publishers/index" class="menu-title">اضف مؤسسة</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer" class="menu-title">طلباتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart" class="menu-title">سلتي</a>
+                        </li>
+
+                    </ul>
+
+                }
+                if (User.IsInRole("Admin"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Users/AdminPage" class="menu-title">لوحة التحكم</a>
+                        </li>
+                    </ul>
+
+                }
+                if (User.IsInRole("Accessories"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Accessories/Index">المتجر</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("AgriculturalCrops"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/AgriculturalCrops/Index">المتجر</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("Aspires"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Aspires/Index">لوحة تحكم الاسبيرات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("ElectricalAndElctronic"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/ElectricalAndElctronic/Index">لوحة تحكم الادوات الكهربائية والاركترونية</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("Fabrics"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Fabrics/Index">لوحة تحكم الاقمشة</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("Food"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Food/Index">لوحة تحكم المنتجات الغذائية</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("HouseholdProducts"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/HouseholdProducts/Index">لوحة تحكم الادوات المنزلية</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("Other"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Other/Index">لوحة تحكم منتجات اخري</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("SportAndEntertainment"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/SportAndEntertainment/Index">لوحة تحكم الترفيه والرياضة</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("WatchesAndJewelry"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/WatchesAndJewelry/Index">لوحة تحكم الساعات والمجوهرات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Advertisements/Index">اعلاناتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Shipping/IndexCompany">شحناتي</a>
+                        </li>
+
+                    </ul>
+                }
+                if (User.IsInRole("Shipping"))
+                {
+                    <ul class="mobile-menu-category-list">
+
+                        <li class="menu-category">
+                            <a href="~/Shipping/Index">الطلبات</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/Cart/AllCart">سلتي</a>
+                        </li>
+
+                        <li class="menu-category">
+                            <a href="~/IndexCustomer/OrderDetails">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/OrderDetails/IndexCustomer">مشترياتي</a>
+                        </li>
+                        <li class="menu-category">
+                            <a href="~/Publishers/Index">الإعدادات</a>
+                        </li>
+
+                    </ul>
+                }
+            }
+
+            <ul class="mobile-menu-category-list">
+                <li class="menu-category">
+                    <a href="~/Home/Index" class="menu-title">الصفحة الرئسية</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexAccessories" class="menu-title">الاكسسوارات</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexAgriculturalCrops" class="menu-title">المحاصيل الزراعية</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexAspires" class="menu-title">الاسبيرات</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexElectricalAndElctronic" class="menu-title">الادوات الكهربائية والإلكترونية</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexFabrics" class="menu-title">الاقمشة</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexFood" class="menu-title">المواد الغذائية</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexHouseholdProducts" class="menu-title">المنتجات المنزلية</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexSportAndEntertainment" class="menu-title">الرياضة والترفيه</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/IndexWatchesAndJewelry" class="menu-title">الساعات والمجوهرات</a>
+                </li>
+                <li class="menu-category">
+                    <a href="~/Home/indexother" class="menu-title">اخري</a>
+                </li>
+            </ul>
+            <partial name="_LoginPartial" />
+        </nav>
+        <div class="mobile-bottom-navigation">
+
+            <button class="action-btn" data-mobile-menu-open-btn>
+                <ion-icon name="menu-outline"></ion-icon>
+            </button>
+        </div>
+    </header>
+
+    <div>
+        <main role="main" class="pb-3">
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+    <div id="Scroll-top">
+        <img src="~/images/up.ico" />
+    </div>
+
+
+    <!--
+      - FOOTER
+    -->
+
+    <div class="main">
+
+        <footer>
+            <div class="waves">
+                <div class="wave" id="wave1"></div>
+            </div>
+
+
+            <div class="zoom">
+                <ul class="social_icon">
+                    <li>
+                        <a href="#">
+                            <img src="~/assets/images/logo.png" alt="Rose Gold Earrings" width="80" height="70">
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+            <ul class="menu">
+                <li>
+                    <a href="~/Email/Send" class="btn btn-outline-light btn-block col-12" style="margin-top:10px">تواصل معانا</a>
+                </li>
+            </ul>
+
+            <p>
+                . Kandaka Of Sudan
+                <br>Copyright 2023 System Dot Project © 
+            </p>
+        </footer>
+
+
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+
+
+
+    <!--
+      - custom js link
+    -->
+    <script src="~/assets/js/script.js"></script>
+
+    <!--
+      - ionicon link
+    -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
+<script>
+    function myFunction() {
+        var element = document.body;
+        element.classList.toggle("dark-mode");
+    }
+</script>
+
+
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/owl.carousel.min.js"></script>
+<script src="~/js/custom.js"></script>
+<script src="~/lib/sweetalert/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="~/lib/sweetalert/sweetalert.min.js"></script>
+<script src="~/js/frommi.js"></script>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
